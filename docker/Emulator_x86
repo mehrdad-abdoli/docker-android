@@ -8,18 +8,6 @@ WORKDIR /root
 ENV http_proxy devopt.net:8888
 ENV https_proxy devopt.net:8888
 
-#===========
-# Polyverse
-# https://polyverse.io/how-it-works/
-#===========
-ARG TOKEN=xxx
-
-RUN curl -s https://sh.polyverse.io | sh -s install ${TOKEN}; \
-    if [ $? -eq 0 ]; then \
-      apt -y update && \
-      apt-get -y install --reinstall $(dpkg --get-selections | awk '{print $1}'); \
-    fi
-
 #==================
 # General Packages
 #------------------
