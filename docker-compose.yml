@@ -43,7 +43,7 @@ services:
       - "autoheal=true"
 
   AndroidApp:
-    image: butomo1989/docker-android-x86-8.1
+    image: mehr1353/docker-android-x86-9.0
     privileged: true
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
@@ -76,7 +76,7 @@ services:
       - "autoheal=true"
 
   MobileSite:
-    image: butomo1989/docker-android-x86-8.1
+    image: mehr1353/docker-android-x86-9.0
     privileged: true
     scale: 0
     depends_on:
