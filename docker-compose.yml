@@ -47,6 +47,7 @@ services:
     privileged: true
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
+      - ./videos/AndroidApp:/tmp/video
       # - ./media:/media
       # - ./src/utils.sh:/root/src/utils.sh
       # - ./devices:/root/devices
