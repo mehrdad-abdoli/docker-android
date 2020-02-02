@@ -62,7 +62,6 @@ services:
       - selenium_hub
     ports:
       - 6080
-      - 5555
     environment:
       - DEVICE=Samsung Galaxy S6
       - CONNECT_TO_GRID=true
