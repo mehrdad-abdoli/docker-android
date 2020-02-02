@@ -1,10 +1,12 @@
 #!/bin/bash
 
 function start() {
-    mkdir -p $VIDEO_PATH
-    name="$(date '+%d_%m_%Y_%H_%M_%S').mp4"
+    PR="$(curl -s localhost:4723/wd/hub/sessions | jq -r '.value[0].capabilities.PR')"
+    BUILD="$(curl -s localhost:4723/wd/hub/sessions | jq -r '.value[0].capabilities.build')"
+    name="$(curl -s localhost:4723/wd/hub/sessions | jq -r '.value[0].capabilities.name').mp4"
+    mkdir -p ${VIDEO_PATH}/${PR}/${BUILD}
     echo "Start video recording"
-    ffmpeg -video_size 1599x899 -framerate 15 -f x11grab -i $DISPLAY $VIDEO_PATH/$name -y
+    ffmpeg -video_size 1598x898 -framerate 15 -f x11grab -i $DISPLAY ${VIDEO_PATH}/${PR}/${BUILD}/${name} -y
 }
 
 function stop() {

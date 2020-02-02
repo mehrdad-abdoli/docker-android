@@ -49,7 +49,7 @@
             </d:camera>
             <d:keyboard>qwerty</d:keyboard>
             <d:nav>nonav</d:nav>
-            <d:ram unit="GiB">3</d:ram>
+            <d:ram unit="GiB">4</d:ram>
             <d:buttons>hard</d:buttons>
             <d:internal-storage unit="GiB">
                 4
@@ -59,8 +59,8 @@
             <d:gpu>Generic GPU</d:gpu>
             <d:abi>
                 armeabi-v7a
-                x86
                 x86_64
+                x86
             </d:abi>
             <d:dock/>
             <d:power-type>battery</d:power-type>

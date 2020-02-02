@@ -148,8 +148,8 @@ function build() {
             IMG_TYPE=google_apis
             BROWSER=browser
         else
-            #adb root cannot be run in IMG_TYPE=google_apis_playstore 
-            IMG_TYPE=google_apis
+            #adb root cannot be run in IMG_TYPE=google_apis_playstore
+            IMG_TYPE=google_apis_playstore
             BROWSER=chrome
         fi
         echo "[BUILD] IMAGE TYPE: $IMG_TYPE"

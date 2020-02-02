@@ -1,114 +1,110 @@
-# Note: It requires docker-compose 1.13.0
-#
-# Usage: docker-compose up -d
-version: "2.2"
+# Usage:
+# docker system prune -a
+# docker rmi $(docker images -f "dangling=true" -q)
+# docker volume rm $(docker volume ls -qf dangling=true)
+# docker restart $(docker ps -f health=unhealthy)
+# docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
+# docker exec -it mob_AndroidApp_1 tail -f /var/log/supervisor/docker-android.stdout.log
+# COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=1 --scale MobileSite=0 --remove-orphans  -d
+version: '2.2'
 
 services:
-  # Selenium hub
-  selenium_hub:
-    image: selenium/hub:3.14.0-curium
-    ports:
-      - 4444:4444
-
-  # There is a bug for using appium. Issue: https://github.com/budtmo/docker-android/issues/73
-  # Real devices
-  #real_device:
-  #  image: budtmo/docker-android-real-device
-  #  privileged: true
-  #  depends_on:
-  #    - selenium_hub
-  #  ports:
-  #    - 6080:6080
-  #  volumes:
-  #    - ./video-real-device:/tmp/video
-  #    - /dev/bus/usb:/dev/bus/usb
-  #    - ~/.android:/root/.android
-  #  environment:
-  #    - CONNECT_TO_GRID=true
-  #    - APPIUM=true
-  #    - SELENIUM_HOST=selenium_hub
-  #    - AUTO_RECORD=true
-  #    - BROWSER_NAME=chrome
-
-  # Using Appium Docker Android  
-  real_device:
-    image: appium/appium
-    depends_on:
-      - selenium_hub
-    network_mode: "service:selenium_hub"
-    privileged: true
-    volumes:
-      - /dev/bus/usb:/dev/bus/usb
-      - ~/.android:/root/.android
-      - $PWD/example/sample_apk:/root/tmp
+  autoheal:
+    image: willfarrell/autoheal
     environment:
-      - CONNECT_TO_GRID=true
-      - SELENIUM_HOST=selenium_hub
-      # Enable it for msite testing
-      #- BROWSER_NAME=chrome
+      - AUTOHEAL_CONTAINER_LABEL=autoheal
+      - AUTOHEAL_INTERVAL=180   # check every 5 seconds
+      - AUTOHEAL_START_PERIOD=300   # wait 0 second before first health check
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
-  # Docker-Android for Android application testing
-  nexus_7.1.1:
-    image: budtmo/docker-android-x86-7.1.1
-    privileged: true
-    # Increase scale number if needed
-    scale: 1
-    depends_on:
-      - selenium_hub
-      - real_device
+  selenium_hub:
+    image: selenium/hub
+    container_name: selenium_hub
+    hostname: selenium_hub
     ports:
-      - 6080
+      - "4444:4444"
+    healthcheck:
+      test: ["CMD", "bash", "/opt/bin/check-grid.sh"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+    environment:
+      - GRID_MAX_SESSION=20
+      - TZ=Asia/Tehran
+      # In seconds, maps to "browserTimeout"
+      - GRID_BROWSER_TIMEOUT=60
+      # In seconds, maps to "timeout"
+      - GRID_TIMEOUT=120
+      # In milliseconds, maps to "newSessionWaitTimeout"
+      - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
+      - SE_OPTS=-browserTimeout 100 -timeout 100
+    labels:
+      - "autoheal=true"
+
+  AndroidApp:
+    image: butomo1989/docker-android-x86-8.1
+    privileged: true
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
-      - $PWD/example/sample_apk:/root/tmp/sample_apk
-      - ./video-nexus_7.1.1:/tmp/video
-    environment:
-      - DEVICE=Nexus 5
-      - CONNECT_TO_GRID=true
-      - APPIUM=true
-      - SELENIUM_HOST=selenium_hub
-      - AUTO_RECORD=true
-
-  # Docker-Android for mobile website testing with chrome browser
-  # Chrome browser exists only for version 7.0 and 7.1.1
-  samsung_galaxy_web_7.1.1:
-    image: budtmo/docker-android-x86-8.1
-    privileged: true
-    # Increase scale number if needed
-    scale: 1
-    depends_on: 
-      - selenium_hub
-      - real_device
-    ports:
-      - 6080
-    volumes:
-      - ./video-samsung_7.1.1:/tmp/video
-    environment:
-      - DEVICE=Samsung Galaxy S6
-      - CONNECT_TO_GRID=true
-      - APPIUM=true
-      - SELENIUM_HOST=selenium_hub
-      - MOBILE_WEB_TEST=true
-      - AUTO_RECORD=true
-
-  # Docker-Android for mobile website testing with default browser
-  # Default browser exists only for version 5.0.1, 5.1.1 and 6.0
-  samsung_galaxy_web_5.1.1:
-    image: budtmo/docker-android-x86-5.1.1
-    privileged: true
-    # Increase scale number if needed
-    scale: 1
+      # - ./media:/media
+      # - ./src/utils.sh:/root/src/utils.sh
+      # - ./devices:/root/devices
+      # - ./src/record.sh:/root/src/record.sh
+      # - ./src/google_play_services.apk:/root/src/google_play_services.apk
+      # - ./src/google_play_store.apk:/root/src/google_play_store.apk
+      # - ./src/google_chrome.apk:/root/src/google_chrome.apk
+      # - ./chromedriver:/root/chromedriver
+      # - ./local_backup/.android:/root/.android
+      # - ./local_backup/android_emulator:/root/android_emulator
+    scale: 0
     depends_on:
       - selenium_hub
-      - real_device
     ports:
       - 6080
-    volumes:
-      - ./video-samsung_5.1.1:/tmp/video
+      - 5555
     environment:
       - DEVICE=Samsung Galaxy S6
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
+      - SELENIUM_PORT=4444
+      - AUTO_RECORD=true
+      - RELAXED_SECURITY=true
+      - TZ=Asia/Tehran
+    labels:
+      - "autoheal=true"
+
+  MobileSite:
+    image: butomo1989/docker-android-x86-8.1
+    privileged: true
+    scale: 0
+    depends_on:
+      - selenium_hub
+    ports:
+      - 6080
+    volumes:
+      - ./videos/MobileSite:/tmp/video
+      # - ./media:/media
+      # - ./src/utils.sh:/root/src/utils.sh
+      # - ./devices:/root/devices
+      # - ./src/record.sh:/root/src/record.sh
+      # - ./src/google_play_services.apk:/root/src/google_play_services.apk
+      # - ./src/google_play_store.apk:/root/src/google_play_store.apk
+      # - ./src/google_chrome.apk:/root/src/google_chrome.apk
+      # - ./chromedriver:/root/chromedriver
+      # - ./local_backup/.android:/root/.android
+      # - ./local_backup/android_emulator:/root/android_emulator
+    environment:
+      - DEVICE=Samsung Galaxy S6
+      - CONNECT_TO_GRID=true
+      - APPIUM=true
+      - SELENIUM_HOST=selenium_hub
+      - SELENIUM_PORT=4444
       - MOBILE_WEB_TEST=true
       - AUTO_RECORD=true
+      - RELAXED_SECURITY=true
+      - TZ=Asia/Tehran
+      - SE_OPTS=-browserTimeout 100 -timeout 100
+    labels:
+      - "autoheal=true"

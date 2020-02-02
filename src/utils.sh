@@ -10,7 +10,7 @@ function wait_emulator_to_be_ready () {
       boot_completed=true
     else
       sleep 1
-    fi      
+    fi
   done
 }
 
@@ -26,9 +26,11 @@ function change_language_if_needed() {
 function install_google_play () {
   wait_emulator_to_be_ready
   echo "Google Play Service will be installed"
-  adb install -r "/root/google_play_services.apk"
+  adb install -r "/root/src/google_play_services.apk"
   echo "Google Play Store will be installed"
-  adb install -r "/root/google_play_store.apk"
+  adb install -r "/root/src/google_play_store.apk"
+  echo "Google chrome will be updated"
+  adb install -r "/root/src/google_chrome.apk"
 }
 
 function disable_animation () {
@@ -69,9 +71,34 @@ function enable_proxy_if_needed () {
   fi
 }
 
+function QA () {
+  # checker="$(adb shell 'su 0 ls /mnt/sdcard/Download/qa101.jpg > /dev/null 2>&1 && echo "yes" || echo "no"')"
+  resp=$(adb shell "ls -1 /mnt/sdcard/Download/ | wc -l")
+  echo $resp
+}
+
+function Push () {
+  echo "Pushing Images :"
+  touch -a -m /media/*
+  adb push -p /media/* /mnt/sdcard/Download
+  counter=$(QA)
+  echo "Pushed images : ${counter}"
+  adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///mnt/sdcard/Download
+  adb shell  "ls /mnt/sdcard/Download"
+}
+
+function Fake_Geo () {
+  wait_emulator_to_be_ready
+  echo "Fake Geo :Please Agree"
+  adb shell "settings put secure location_providers_allowed +network"
+  adb -s emulator-5554 emu geo fix 35.7 51.4 1400
+}
+
 enable_proxy_if_needed
 sleep 1
 change_language_if_needed
 sleep 1
 install_google_play
 disable_animation
+Push
+Fake_Geo
