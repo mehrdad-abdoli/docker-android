@@ -1,6 +1,6 @@
 #!/bin/bash
-app = $1
-mob = $2
+app=$1
+mob=$2
 function wait_emulator_to_be_ready () {
   boot_completed=false
   while [ "$boot_completed" == false ]; do
