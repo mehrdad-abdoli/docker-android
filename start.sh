@@ -15,14 +15,14 @@ function wait_emulator_to_be_ready () {
   done
 }
 
-for i in {1..$app}
+for i in $(seq 1 $app);
 do
   COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=$i --scale MobileSite=0 --remove-orphans  -d
   echo "Start $i Emulator"
   wait_emulator_to_be_ready AndroidApp_$i
 done
 
-for i in {1..$mob}
+for i in $(seq 1 $mob);
 do
   COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=8 --scale MobileSite=$i --remove-orphans  -d
   echo "Start $i Emulator"
