@@ -6,7 +6,7 @@ LABEL maintainer "Budi Utomo <budtmo.os@gmail.com>"
 #=============
 WORKDIR /root
 #ENV http_proxy devopt.net:8888
-$ENV https_proxy devopt.net:8888
+#ENV https_proxy devopt.net:8888
 
 #==================
 # General Packages
