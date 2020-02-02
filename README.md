@@ -19,7 +19,7 @@ Emulator - Samsung Device    | Emulator - Nexus Device     | Real Device
 
 Purposes
 --------
-
+test
 1. Run UI tests for mobile websites with [appium]
 2. Build Android project and run unit tests with the latest build-tools
 3. Run UI tests for Android applications with different frameworks ([appium], [espresso], [robotium], etc.)
@@ -106,7 +106,7 @@ Quick Start
 Custom configurations
 ---------------------
 
-[This document](README_CUSTOM_CONFIG.md) contains custom configurations of Docker-Android that you might need, e.g. Proxy, Changing language on fly, etc. 
+[This document](README_CUSTOM_CONFIG.md) contains custom configurations of Docker-Android that you might need, e.g. Proxy, Changing language on fly, etc.
 
 Build Android project
 ---------------------
@@ -124,31 +124,31 @@ Docker-Android can be used for building Android project and executing its unit t
     ```bash
     docker run -it --rm -v $PWD/testing-samples/ui/espresso/BasicSample:/tmp -w /tmp budtmo/docker-android-x86-8.1 /tmp/gradlew build
     ```
-    
+
 Control Android connected to host (Emulator or Real Device)
 -----------------------------------------------------------
-1. Create a docker container with this command 
+1. Create a docker container with this command
 
 	```
 	$ docker run --privileged -d -p 6080:6080 -p 5554:5554 -p 5555:5555 -p 4723:4723 --name android-container-appium budtmo/docker-android-real-device
 	```
-	
+
 2. Open noVNC [http://localhost:6080](http://localhost:6080)
 
 3. Open terminal by clicking right on **noVNC** window >> **Terminal emulator**
 
-4. To connect to host's adb (make sure your host have adb and connected to the device.) 
+4. To connect to host's adb (make sure your host have adb and connected to the device.)
 
 	```
 	$ adb -H host.docker.internal devices
 	```
-	
+
 	To specify port, just add `-P port_number`
 
 	```
 	$ adb -H host.docker.internal -P 5037 devices
 	```
-	
+
 5. Now your container can access your host devices. But, you need to add `remoteAdbHost` and `adbPort` desired capabilities to make **Appium** can recognise those devices.  
 
 
