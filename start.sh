@@ -15,10 +15,6 @@ function wait_emulator_to_be_ready () {
   done
 }
 
-#docker-compose down
-
-COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=0 --scale MobileSite=0 --remove-orphans  -d
-
 for i in {1..$app}
 do
   COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=$i --scale MobileSite=0 --remove-orphans  -d
