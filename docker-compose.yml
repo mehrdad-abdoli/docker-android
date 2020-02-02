@@ -57,7 +57,7 @@ services:
       # - ./chromedriver:/root/chromedriver
       # - ./local_backup/.android:/root/.android
       # - ./local_backup/android_emulator:/root/android_emulator
-    scale: 0
+    scale: 18
     depends_on:
       - selenium_hub
     ports:
@@ -77,7 +77,7 @@ services:
   MobileSite:
     image: mehr1353/docker-android-x86-9.0
     privileged: true
-    scale: 0
+    scale: 2
     depends_on:
       - selenium_hub
     ports:
