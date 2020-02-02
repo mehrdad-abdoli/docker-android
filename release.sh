@@ -1,5 +1,7 @@
 #!/bin/bash
 # Bash version should >= 4 to be able to run this script.
+export https_proxy=http://devopt.net:8888
+export http_proxy=http://devopt.net:8888
 IMAGE="${DOCKER_ORG:-budtmo}/docker-android"
 
 if [ -z "$1" ]; then
