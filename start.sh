@@ -1,4 +1,6 @@
 #!/bin/bash
+app = $1
+mob = $2
 function wait_emulator_to_be_ready () {
   boot_completed=false
   while [ "$boot_completed" == false ]; do
@@ -17,14 +19,14 @@ function wait_emulator_to_be_ready () {
 
 COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=0 --scale MobileSite=0 --remove-orphans  -d
 
-for i in {1..$1}
+for i in {1..$app}
 do
   COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=$i --scale MobileSite=0 --remove-orphans  -d
   echo "Start $i Emulator"
   wait_emulator_to_be_ready AndroidApp_$i
 done
 
-for i in {1..$2}
+for i in {1..$mob}
 do
   COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=8 --scale MobileSite=$i --remove-orphans  -d
   echo "Start $i Emulator"
