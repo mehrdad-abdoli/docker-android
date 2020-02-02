@@ -130,7 +130,7 @@ ENV ANDROID_VERSION=$ANDROID_VERSION \
 ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
 
 RUN yes | sdkmanager --licenses && \
-    sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}" "emulator" --proxy=https --proxy_host= devopt.net --proxy_port=8888
+    sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}" "emulator" --proxy=http --proxy_host= devopt.net --proxy_port=8888
 
 #==============================================
 # Download proper version of chromedriver
