@@ -54,7 +54,7 @@ ADD docker/configs/sources1810.list /etc/apt/sources.list.d/
 ADD docker/configs/x11vnc.pref /etc/apt/preferences.d/
 RUN apt-get autoclean
 RUN apt-get clean
-RUN apt-get update
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get -qqy update && apt-get -qqy install --no-install-recommends \
     xterm \
     supervisor \
