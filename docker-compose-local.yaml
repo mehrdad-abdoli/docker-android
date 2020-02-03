@@ -32,7 +32,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   selenium_hub:
-    image: selenium_hub
+    image: selenium/hub:3.14
     container_name: selenium_hub
     hostname: selenium_hub
     ports:
