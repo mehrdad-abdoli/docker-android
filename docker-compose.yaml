@@ -9,14 +9,14 @@
 version: '2.2'
 
 services:
-  # autoheal:
-  #   image: willfarrell/autoheal
-  #   environment:
-  #     - AUTOHEAL_CONTAINER_LABEL=autoheal
-  #     - AUTOHEAL_INTERVAL=180   # check every 5 seconds
-  #     - AUTOHEAL_START_PERIOD=300   # wait 0 second before first health check
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
+  autoheal:
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=autoheal
+      - AUTOHEAL_INTERVAL=180   # check every 5 seconds
+      - AUTOHEAL_START_PERIOD=300   # wait 0 second before first health check
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
   selenium_hub:
     image: selenium_hub
@@ -38,8 +38,8 @@ services:
       - GRID_TIMEOUT=120
       # In milliseconds, maps to "newSessionWaitTimeout"
       - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
-    # labels:
-    #   - "autoheal=true"
+    labels:
+      - "autoheal=true"
 
   AndroidApp:
     image: mehr1353/docker-android-x86-9.0
@@ -71,8 +71,8 @@ services:
       - AUTO_RECORD=true
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
-    # labels:
-    #   - "autoheal=true"
+    labels:
+      - "autoheal=true"
 
   MobileSite:
     image: mehr1353/docker-android-x86-9.0
