@@ -1,0 +1,128 @@
+# Note this users version 2.1 which means it requires docker-compose 1.9
+#
+# Usage:
+# docker system prune -a
+# docker build -t "appium/appium:1.9.1-p0" -f Dockerfile .
+# ./release.sh build 8.1 1.5-p6
+# docker-compose down
+# docker rmi $(docker images -f "dangling=true" -q)
+# docker volume rm $(docker volume ls -qf dangling=true)
+# docker restart $(docker ps -f health=unhealthy)
+# docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
+# docker pull selenium/hub:3.14.0-curium
+# docker pull  butomo1989/docker-android-x86-8.1:1.7-p1
+# docker-compose up --force-recreate --scale nexus_7.1.1=6
+# cat /dev/null > ~/.bash_history && history -c && exit
+# docker exec -it mob_AndroidApp_1 tail -f /var/log/supervisor/docker-android.stdout.log
+# docker exec -it mob_MobileSite_2 tail -f /var/log/supervisor/docker-android.stdout.log
+# COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=1 --scale MobileSite=1 --remove-orphans  -d
+version: '2.2'
+
+services:
+  autoheal:
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=autoheal
+      - AUTOHEAL_INTERVAL=10   # check every 5 seconds
+      - AUTOHEAL_START_PERIOD=600   # wait 0 second before first health check
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # Selenium hub
+  selenium_hub:
+    image: selenium/hub
+    container_name: selenium_hub
+    hostname: selenium_hub
+    ports:
+      - "4444:4444"
+    healthcheck:
+      test: ["CMD", "bash", "/opt/bin/check-grid.sh"]
+      interval: 15s
+      timeout: 30s
+      retries: 5
+    environment:
+      - GRID_MAX_SESSION=20
+      - TZ=Asia/Tehran
+      # In seconds, maps to "browserTimeout"
+      - GRID_BROWSER_TIMEOUT=60
+      # In seconds, maps to "timeout"
+      - GRID_TIMEOUT=120
+      # In milliseconds, maps to "newSessionWaitTimeout"
+      - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
+      #- SE_OPTS=-browserTimeout 100 -timeout 100
+    labels:
+      - "autoheal=true"
+
+
+  # Docker-Android for Android application testing
+  AndroidApp:
+    image: butomo1989/docker-android-x86-8.1
+    privileged: true
+    # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
+    volumes:
+      - ./videos/AndroidApp:/tmp/video
+      - ./media:/media
+      - ./src/utils.sh:/root/src/utils.sh
+      - ./devices:/root/devices
+      - ./src/record.sh:/root/src/record.sh
+      # - ./src/google_play_services.apk:/root/google_play_services.apk
+      # - ./src/google_chrome.apk:/root/google_chrome.apk
+      # - ./supervisord.conf:/root/supervisord.conf
+      # - ./src/app.py:/root/src/app.py
+      # - ./local_backup/.android:/root/.android
+      # - ./local_backup/android_emulator:/root/android_emulator
+
+    # Increase scale number if needed
+    scale: 0
+    depends_on:
+      - selenium_hub
+    ports:
+      - 6080
+      - 5555
+    environment:
+      - DEVICE=Samsung Galaxy S6
+      - CONNECT_TO_GRID=true
+      - APPIUM=true
+      - SELENIUM_HOST=selenium_hub
+      - SELENIUM_PORT=4444
+      - AUTO_RECORD=true
+      - RELAXED_SECURITY=true
+      - TZ=Asia/Tehran
+    labels:
+      - "autoheal=true"
+
+  # Docker-Android for mobile website testing with chrome browser
+  # Chrome browser exists only for version 7.0 and 7.1.1
+  MobileSite:
+    image: butomo1989/docker-android-x86-10.0
+    privileged: true
+    # Increase scale number if needed
+    scale: 0
+    depends_on:
+      - selenium_hub
+    ports:
+      - 6080
+    volumes:
+      - ./videos/AndroidApp:/tmp/video
+      - ./media:/media
+      - /dev/shm:/dev/shm
+      - ./src/utils.sh:/root/src/utils.sh
+      - ./devices:/root/devices
+      - ./src/record.sh:/root/src/record.sh
+      - ./chrome.apk:/root/chrome.apk
+      - ./chromedriver:/root/chromedriver
+      # - ./local_backup/.android:/root/.android
+      # - ./local_backup/android_emulator:/root/android_emulator
+    environment:
+      - DEVICE=Samsung Galaxy S6
+      - CONNECT_TO_GRID=true
+      - APPIUM=true
+      - SELENIUM_HOST=selenium_hub
+      - SELENIUM_PORT=4444
+      - MOBILE_WEB_TEST=true
+      - AUTO_RECORD=true
+      - RELAXED_SECURITY=true
+      - TZ=Asia/Tehran
+      - SE_OPTS=-browserTimeout 100 -timeout 100
+    labels:
+      - "autoheal=true"
