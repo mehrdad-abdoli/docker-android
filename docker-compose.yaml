@@ -13,8 +13,11 @@ services:
     image: willfarrell/autoheal
     environment:
       - AUTOHEAL_CONTAINER_LABEL=autoheal
-      - AUTOHEAL_INTERVAL=180   # check every 5 seconds
-      - AUTOHEAL_START_PERIOD=300   # wait 0 second before first health check
+      - AUTOHEAL_INTERVAL=10   # check every 5 seconds
+      - AUTOHEAL_START_PERIOD=180   # wait 0 second before first health check
+      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=10   # Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below)
+      - DOCKER_SOCK=/var/run/docker.sock   # Unix socket for curl requests to Docker API
+      - CURL_TIMEOUT=30     # --max-time seconds for curl requests to Docker API
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -26,9 +29,9 @@ services:
       - "4444:4444"
     healthcheck:
       test: ["CMD", "bash", "/opt/bin/check-grid.sh"]
-      interval: 10s
-      timeout: 15s
-      retries: 3
+      interval: 15s
+      timeout: 30s
+      retries: 5
     environment:
       - GRID_MAX_SESSION=30
       - TZ=Asia/Tehran
@@ -42,7 +45,7 @@ services:
       - "autoheal=true"
 
   AndroidApp:
-    image: mehr1353/docker-android-x86-9.0
+    image: mehr1353/docker-android-x86-8.1
     privileged: true
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
@@ -75,7 +78,7 @@ services:
       - "autoheal=true"
 
   MobileSite:
-    image: mehr1353/docker-android-x86-9.0
+    image: mehr1353/docker-android-x86-8.1
     privileged: true
     scale: 0
     depends_on:

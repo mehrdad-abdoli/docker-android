@@ -24,13 +24,15 @@ services:
     environment:
       - AUTOHEAL_CONTAINER_LABEL=autoheal
       - AUTOHEAL_INTERVAL=10   # check every 5 seconds
-      - AUTOHEAL_START_PERIOD=600   # wait 0 second before first health check
+      - AUTOHEAL_START_PERIOD=180   # wait 0 second before first health check
+      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=10   # Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below)
+      - DOCKER_SOCK=/var/run/docker.sock   # Unix socket for curl requests to Docker API
+      - CURL_TIMEOUT=30     # --max-time seconds for curl requests to Docker API
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  # Selenium hub
   selenium_hub:
-    image: selenium/hub
+    image: selenium_hub
     container_name: selenium_hub
     hostname: selenium_hub
     ports:
@@ -41,7 +43,7 @@ services:
       timeout: 30s
       retries: 5
     environment:
-      - GRID_MAX_SESSION=20
+      - GRID_MAX_SESSION=30
       - TZ=Asia/Tehran
       # In seconds, maps to "browserTimeout"
       - GRID_BROWSER_TIMEOUT=60
@@ -49,7 +51,6 @@ services:
       - GRID_TIMEOUT=120
       # In milliseconds, maps to "newSessionWaitTimeout"
       - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
-      #- SE_OPTS=-browserTimeout 100 -timeout 100
     labels:
       - "autoheal=true"
 
@@ -65,12 +66,10 @@ services:
       - ./src/utils.sh:/root/src/utils.sh
       - ./devices:/root/devices
       - ./src/record.sh:/root/src/record.sh
-      # - ./src/google_play_services.apk:/root/google_play_services.apk
-      # - ./src/google_chrome.apk:/root/google_chrome.apk
-      # - ./supervisord.conf:/root/supervisord.conf
-      # - ./src/app.py:/root/src/app.py
-      # - ./local_backup/.android:/root/.android
-      # - ./local_backup/android_emulator:/root/android_emulator
+      - ./src/google_play_store.apk:/root/google_play_store.apk
+      - ./src/google_play_services.apk:/root/google_play_services.apk
+      - ./src/google_chrome.apk:/root/google_chrome.apk
+      - ./chromedriver:/root/chromedriver
 
     # Increase scale number if needed
     scale: 0
@@ -94,7 +93,7 @@ services:
   # Docker-Android for mobile website testing with chrome browser
   # Chrome browser exists only for version 7.0 and 7.1.1
   MobileSite:
-    image: butomo1989/docker-android-x86-10.0
+    image: butomo1989/docker-android-x86-8.1
     privileged: true
     # Increase scale number if needed
     scale: 0
@@ -103,16 +102,16 @@ services:
     ports:
       - 6080
     volumes:
-      - ./videos/AndroidApp:/tmp/video
+      - ./videos/MobileSite:/tmp/video
       - ./media:/media
       - /dev/shm:/dev/shm
       - ./src/utils.sh:/root/src/utils.sh
       - ./devices:/root/devices
       - ./src/record.sh:/root/src/record.sh
-      - ./chrome.apk:/root/chrome.apk
+      - ./src/google_play_store.apk:/root/google_play_store.apk
+      - ./src/google_play_services.apk:/root/google_play_services.apk
+      - ./src/google_chrome.apk:/root/google_chrome.apk
       - ./chromedriver:/root/chromedriver
-      # - ./local_backup/.android:/root/.android
-      # - ./local_backup/android_emulator:/root/android_emulator
     environment:
       - DEVICE=Samsung Galaxy S6
       - CONNECT_TO_GRID=true
