@@ -44,12 +44,14 @@ services:
 
   AndroidApp:
     image: mehr1353/docker-android-x86-8.1
+    # image: budtmo/docker-android-x86-8.1
     privileged: true
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
       - /var/lib/docker/qa/vids/AndroidApp:/tmp/video
       # - ./media:/media
       - ./src/utils.sh:/root/src/utils.sh
+      - ./src/app.py:/root/src/app.py
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
@@ -77,6 +79,7 @@ services:
 
   MobileSite:
     image: mehr1353/docker-android-x86-8.1
+    # image: budtmo/docker-android-x86-10.0
     privileged: true
     scale: 0
     depends_on:
