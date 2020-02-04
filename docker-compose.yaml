@@ -14,10 +14,10 @@ services:
     environment:
       - AUTOHEAL_CONTAINER_LABEL=autoheal
       - AUTOHEAL_INTERVAL=10   # check every 5 seconds
-      - AUTOHEAL_START_PERIOD=600   # wait 0 second before first health check
-      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=30   # Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below)
+      - AUTOHEAL_START_PERIOD=90   # wait 0 second before first health check
+      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=20   # Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below)
       - DOCKER_SOCK=/var/run/docker.sock   # Unix socket for curl requests to Docker API
-      - CURL_TIMEOUT=30     # --max-time seconds for curl requests to Docker API
+      - CURL_TIMEOUT=10     # --max-time seconds for curl requests to Docker API
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -33,7 +33,7 @@ services:
       timeout: 30s
       retries: 5
     environment:
-      - GRID_MAX_SESSION=30
+      - GRID_MAX_SESSION=25
       - TZ=Asia/Tehran
       # In seconds, maps to "browserTimeout"
       - GRID_BROWSER_TIMEOUT=60
@@ -87,6 +87,7 @@ services:
       - /var/lib/docker/qa/vids/MobileSite:/tmp/video
       # - ./media:/media
       - ./src/utils.sh:/root/src/utils.sh
+      - ./src/app.py:/root/src/app.py
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
