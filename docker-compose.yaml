@@ -41,8 +41,6 @@ services:
       - GRID_TIMEOUT=120
       # In milliseconds, maps to "newSessionWaitTimeout"
       - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
-    labels:
-      - "autoheal=true"
 
   AndroidApp:
     image: mehr1353/docker-android-x86-8.1
