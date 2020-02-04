@@ -220,10 +220,10 @@ def run():
 
     if is_first_run:
         logger.info('Emulator was not previously initialized. Preparing a new one...')
-        cmd = 'emulator/emulator @{name} -gpu host -no-accel -verbose -writable-system {custom_args}'.format(name=avd_name, custom_args=custom_args)
+        cmd = 'emulator/emulator @{name} -grpc 8556 -gpu swiftshader_indirect -no-snapshot -no-accel -no-audio -verbose -wipe-data -writable-system -skip-adb-auth -qemu -append panic=1 {custom_args}'.format(name=avd_name, custom_args=custom_args)
     else:
         logger.info('Using previously initialized AVD...')
-        cmd = 'emulator/emulator @{name} -gpu host -no-accel -verbose -writable-system {custom_args}'.format(name=avd_name, custom_args=custom_args)
+        cmd = 'emulator/emulator @{name} -grpc 8556 -gpu swiftshader_indirect -no-snapshot -no-accel -no-audio -verbose -writable-system -skip-adb-auth -qemu -append panic=1 {custom_args}'.format(name=avd_name, custom_args=custom_args)
 
     appium = convert_str_to_bool(str(os.getenv('APPIUM', False)))
     if appium:
