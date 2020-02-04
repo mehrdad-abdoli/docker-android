@@ -73,13 +73,13 @@ function get_android_versions() {
 }
 
 get_android_versions
-processor=x86
+processor=x86_64
 
 function test() {
     # Prepare needed parameter to run tests
     test_android_version=7.1.1
     test_api_level=25
-    test_processor=x86
+    test_processor=x86_64
     test_sys_img=$test_processor
     test_img_type=google_apis
     test_browser=chrome
@@ -87,7 +87,7 @@ function test() {
     test_container=test_con
 
     # Run e2e tests
-    # E2E tests must be run only for linux OS / x86 image to reduce duration of test execution
+    # E2E tests must be run only for linux OS / x86_64 image to reduce duration of test execution
     if [ "$(uname -s)" == 'Linux' ] && [ "$E2E" = true ]; then
         echo "----BUILD TEST IMAGE----"
         docker build -t $test_image --build-arg ANDROID_VERSION=$test_android_version \
