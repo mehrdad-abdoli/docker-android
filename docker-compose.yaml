@@ -13,11 +13,11 @@ services:
     image: willfarrell/autoheal
     environment:
       - AUTOHEAL_CONTAINER_LABEL=autoheal
-      - AUTOHEAL_INTERVAL=10   # check every 5 seconds
-      - AUTOHEAL_START_PERIOD=90   # wait 0 second before first health check
-      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=20   # Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below)
+      - AUTOHEAL_INTERVAL=180   # check every 5 seconds
+      - AUTOHEAL_START_PERIOD=600   # wait 0 second before first health check
+      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=30   # Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below)
       - DOCKER_SOCK=/var/run/docker.sock   # Unix socket for curl requests to Docker API
-      - CURL_TIMEOUT=10     # --max-time seconds for curl requests to Docker API
+      - CURL_TIMEOUT=15     # --max-time seconds for curl requests to Docker API
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
