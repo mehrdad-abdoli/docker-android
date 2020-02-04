@@ -50,8 +50,8 @@ services:
     volumes:
       - /var/lib/docker/qa/vids/AndroidApp:/tmp/video
       # - ./media:/media
-      - ./src/utils.sh:/root/src/utils.sh
-      - ./src/app.py:/root/src/app.py
+      # - ./src/utils.sh:/root/src/utils.sh
+      # - ./src/app.py:/root/src/app.py
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
@@ -89,8 +89,8 @@ services:
     volumes:
       - /var/lib/docker/qa/vids/MobileSite:/tmp/video
       # - ./media:/media
-      - ./src/utils.sh:/root/src/utils.sh
-      - ./src/app.py:/root/src/app.py
+      # - ./src/utils.sh:/root/src/utils.sh
+      # - ./src/app.py:/root/src/app.py
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
