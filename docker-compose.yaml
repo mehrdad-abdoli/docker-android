@@ -51,7 +51,7 @@ services:
     volumes:
       - ./videos/AndroidApp:/tmp/video
       # - ./media:/media
-      # - ./src/utils.sh:/root/src/utils.sh
+      - ./src/utils.sh:/root/src/utils.sh
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
@@ -88,7 +88,7 @@ services:
     volumes:
       - ./videos/MobileSite:/tmp/video
       # - ./media:/media
-      # - ./src/utils.sh:/root/src/utils.sh
+      - ./src/utils.sh:/root/src/utils.sh
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk

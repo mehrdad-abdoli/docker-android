@@ -2,8 +2,9 @@
 
 function wait_emulator_to_be_ready () {
   boot_completed=false
+  adb wait-for-device
   while [ "$boot_completed" == false ]; do
-    status=$(adb wait-for-device shell getprop sys.boot_completed | tr -d '\r')
+    status=$(adb shell getprop sys.boot_completed | tr -d '\r')
     echo "Boot Status: $status"
 
     if [ "$status" == "1" ]; then
@@ -93,11 +94,9 @@ function Fake_Geo () {
   adb shell "settings put secure location_providers_allowed +network"
   adb -s emulator-5554 emu geo fix 35.7 51.4 1400
 }
-
+sleep 300
 enable_proxy_if_needed
-sleep 1
 change_language_if_needed
-sleep 1
 install_google_play
 disable_animation
 Push
