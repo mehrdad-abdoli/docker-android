@@ -47,7 +47,7 @@ services:
     privileged: true
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
-      # - /var/lib/docker/qa/vids/AndroidApp:/tmp/video
+      - /var/lib/docker/qa/vids/AndroidApp:/tmp/video
       # - ./media:/media
       - ./src/utils.sh:/root/src/utils.sh
       # - ./devices:/root/devices
@@ -84,7 +84,7 @@ services:
     ports:
       - 6080
     volumes:
-      # - /var/lib/docker/qa/vids/MobileSite:/tmp/video
+      - /var/lib/docker/qa/vids/MobileSite:/tmp/video
       # - ./media:/media
       - ./src/utils.sh:/root/src/utils.sh
       # - ./devices:/root/devices
