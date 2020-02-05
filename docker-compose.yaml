@@ -5,7 +5,7 @@
 # docker restart $(docker ps -f health=unhealthy)
 # docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
 # docker exec -it mob_AndroidApp_1 tail -f /var/log/supervisor/docker-android.stdout.log
-# COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=8 --scale MobileSite=0 --remove-orphans  -d
+# COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=16 --scale MobileSite=3 --remove-orphans  -d
 version: '2.2'
 
 services:
@@ -67,7 +67,7 @@ services:
     ports:
       - 6080
     environment:
-      - DEVICE=Nexus 10
+      - DEVICE=Pixel C
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
@@ -102,7 +102,7 @@ services:
       # - ./local_backup/.android:/root/.android
       # - ./local_backup/android_emulator:/root/android_emulator
     environment:
-      - DEVICE=Nexus 10
+      - DEVICE=Nexus 9
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
