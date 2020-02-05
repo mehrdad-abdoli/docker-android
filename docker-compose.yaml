@@ -67,7 +67,7 @@ services:
     ports:
       - 6080
     environment:
-      - DEVICE=Pixel C
+      - DEVICE=pixel_c
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
