@@ -102,7 +102,7 @@ services:
       # - ./local_backup/.android:/root/.android
       # - ./local_backup/android_emulator:/root/android_emulator
     environment:
-      - DEVICE=Nexus 9
+      - DEVICE=galaxy_nexus
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
