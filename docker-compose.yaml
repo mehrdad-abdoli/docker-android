@@ -5,7 +5,7 @@
 # docker restart $(docker ps -f health=unhealthy)
 # docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
 # docker exec -it mob_AndroidApp_1 tail -f /var/log/supervisor/docker-android.stdout.log
-# COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=16 --scale MobileSite=3 --remove-orphans  -d
+# COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=8 --scale MobileSite=0 --remove-orphans  -d
 version: '2.2'
 
 services:
@@ -53,7 +53,7 @@ services:
       # - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
       - /dev/kvm:/dev/kvm
-      # - ./devices:/root/devices
+      - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
       # - ./src/google_play_store.apk:/root/src/google_play_store.apk
@@ -67,7 +67,7 @@ services:
     ports:
       - 6080
     environment:
-      - DEVICE=pixel_c
+      - DEVICE=Samsung Galaxy S6
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
@@ -93,7 +93,7 @@ services:
       # - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
       - /dev/kvm:/dev/kvm
-      # - ./devices:/root/devices
+      - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
       # - ./src/google_play_store.apk:/root/src/google_play_store.apk
@@ -102,7 +102,7 @@ services:
       # - ./local_backup/.android:/root/.android
       # - ./local_backup/android_emulator:/root/android_emulator
     environment:
-      - DEVICE=galaxy_nexus
+      - DEVICE=Samsung Galaxy S6
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
