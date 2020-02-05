@@ -24,14 +24,17 @@ function change_language_if_needed() {
 }
 
 function install_google_play () {
-  wait_emulator_to_be_ready
-  echo "Google chrome will be updated"
-  adb install -r "/root/src/google_chrome.apk"
-  wait_emulator_to_be_ready
-  echo "Google Play Service will be installed"
-  adb install -r "/root/src/google_play_services.apk"
-  echo "Google Play Store will be installed"
-  adb install -r "/root/src/google_play_store.apk"
+  if [ "$MOBILE_WEB_TEST" = true ]; then
+    wait_emulator_to_be_ready
+    echo "Google chrome will be updated"
+    adb install -r "/root/src/google_chrome.apk"
+  else
+    wait_emulator_to_be_ready
+    echo "Google Play Service will be installed"
+    adb install -r "/root/src/google_play_services.apk"
+    echo "Google Play Store will be installed"
+    adb install -r "/root/src/google_play_store.apk"
+  fi
 }
 
 function disable_animation () {
@@ -97,9 +100,9 @@ function Fake_Geo () {
   adb -s emulator-5554 emu geo fix 35.7 51.4 1400
 }
 
-enable_proxy_if_needed
-change_language_if_needed
-disable_animation
+#enable_proxy_if_needed
+#change_language_if_needed
+#disable_animation
 Push
-install_google_play
-Fake_Geo
+#install_google_play
+#Fake_Geo
