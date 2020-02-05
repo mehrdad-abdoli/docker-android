@@ -1,4 +1,4 @@
-FROM appium/appium:1.15.1-p0
+FROM mehr1353/appium1.15.1:2.0
 LABEL maintainer "Budi Utomo <budtmo.os@gmail.com>"
 
 #=============
@@ -192,7 +192,13 @@ COPY src /root/src
 COPY supervisord.conf /root/
 RUN chmod -R +x /root/src && chmod +x /root/supervisord.conf
 
-HEALTHCHECK --interval=2s --timeout=40s --retries=1 \
-    CMD timeout 40 adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
+#HEALTHCHECK --interval=2s --timeout=40s --retries=1 \
+#    CMD timeout 40 adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
+
+HEALTHCHECK --interval=30s \
+        --timeout=30s \
+        --start-period=30s \
+        --retries=3 \
+        CMD adb shell getprop dev.bootcomplete | grep "1"
 
 CMD /usr/bin/supervisord --configuration supervisord.conf
