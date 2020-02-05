@@ -8,7 +8,7 @@
             <d:screen>
                 <d:screen-size>large</d:screen-size>
                 <d:diagonal-length>6.1</d:diagonal-length>
-                <d:pixel-density>xxxhdpi</d:pixel-density>
+                <d:pixel-density>hdpi</d:pixel-density>
                 <d:screen-ratio>long</d:screen-ratio>
                 <d:dimensions>
                     <d:x-dimension>1440</d:x-dimension>
