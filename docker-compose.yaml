@@ -67,7 +67,7 @@ services:
     ports:
       - 6080
     environment:
-      - DEVICE=Samsung Galaxy S10
+      - DEVICE=Samsung Galaxy S6
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
@@ -102,7 +102,7 @@ services:
       # - ./local_backup/.android:/root/.android
       # - ./local_backup/android_emulator:/root/android_emulator
     environment:
-      - DEVICE=Samsung Galaxy S10
+      - DEVICE=Samsung Galaxy S6
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
