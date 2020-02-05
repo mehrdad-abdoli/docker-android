@@ -24,17 +24,14 @@ function change_language_if_needed() {
 }
 
 function install_google_play () {
-  if [ "$MOBILE_WEB_TEST" = true ]; then
-    wait_emulator_to_be_ready
-    echo "Google chrome will be updated"
-    adb install -r "/root/src/google_chrome.apk"
-  else
-    wait_emulator_to_be_ready
-    echo "Google Play Service will be installed"
-    adb install -r "/root/src/google_play_services.apk"
-    echo "Google Play Store will be installed"
-    adb install -r "/root/src/google_play_store.apk"
-  fi
+  wait_emulator_to_be_ready
+  echo "Google chrome will be updated"
+  adb install -r "/root/src/google_chrome.apk"
+  wait_emulator_to_be_ready
+  echo "Google Play Service will be installed"
+  adb install -r "/root/src/google_play_services.apk"
+  echo "Google Play Store will be installed"
+  adb install -r "/root/src/google_play_store.apk"
 }
 
 function disable_animation () {

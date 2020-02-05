@@ -53,7 +53,7 @@ services:
       - local_backup/android_emulator:/root/android_emulator
       - /dev/kvm:/dev/kvm
       # - ./media:/media
-      # - ./src/utils.sh:/root/src/utils.sh
+      - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
@@ -93,7 +93,7 @@ services:
       - local_backup/android_emulator:/root/android_emulator
       - /dev/kvm:/dev/kvm
       # - ./media:/media
-      # - ./src/utils.sh:/root/src/utils.sh
+      - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
