@@ -22,31 +22,23 @@ parts {
     }
 
     controls {
-        background {
-            image   controls.png
-        }
-        buttons {
-            camera {
-                    image button.png
-                    x 8
-                    y 8
-            }
-			volume-down {
-                    image button.png
-                    x 214
-                    y 8
-            }
-            volume-up {
-                    image button.png
-                    x 419
-                    y 8
-            }
+      background {
+          image   controls.png
+      }
+      buttons {
+          camera {
+                  image button.png
+                  x 8
+                  y 8
+          }
+
 			power {
                     image button.png
                     x 624
                     y 8
             }
 
+<<<<<<< HEAD
 			phone-dial {
                     image button.png
                     x 8
@@ -57,6 +49,8 @@ parts {
                     x 624
                     y 273
             }
+=======
+>>>>>>> 0f55ee94ae8bebd5061157514d2804165aae1b6b
 			home {
                     image button.png
                     x 8
@@ -83,6 +77,7 @@ parts {
                     x 284
                     y 201
             }
+<<<<<<< HEAD
 			dpad-up {
                     image arrow_up.png
                     x 8
@@ -337,6 +332,8 @@ parts {
                 y 326
             }
         }
+=======
+>>>>>>> 0f55ee94ae8bebd5061157514d2804165aae1b6b
     }
 }
 
