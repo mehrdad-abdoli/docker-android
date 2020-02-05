@@ -49,11 +49,9 @@ services:
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
     volumes:
       - /var/lib/docker/qa/vids/AndroidApp:/tmp/video
-      - ./local_backup/.android:/root/.android
-      - ./local_backup/android_emulator:/root/android_emulator
       - /dev/kvm:/dev/kvm
       # - ./media:/media
-      - ./src/utils.sh:/root/src/utils.sh
+      # - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
@@ -89,11 +87,9 @@ services:
       - 6080
     volumes:
       - /var/lib/docker/qa/vids/MobileSite:/tmp/video
-      - ./local_backup/.android:/root/.android
-      - ./local_backup/android_emulator:/root/android_emulator
       - /dev/kvm:/dev/kvm
       # - ./media:/media
-      - ./src/utils.sh:/root/src/utils.sh
+      # - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
       # - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
