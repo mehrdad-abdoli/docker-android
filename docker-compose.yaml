@@ -73,6 +73,7 @@ services:
       - AUTO_RECORD=true
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
+      - EMULATOR_ARGS=-no-snapshot -memory 1024 -no-boot-anim 
     labels:
       - "autoheal=true"
 
