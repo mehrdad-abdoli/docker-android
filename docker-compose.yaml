@@ -65,7 +65,7 @@ services:
     ports:
       - 6080
     environment:
-      - DEVICE=samsung galaxy s6
+      - DEVICE=Samsung Galaxy S6
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
@@ -98,7 +98,7 @@ services:
       # - ./src/google_chrome.apk:/root/src/google_chrome.apk
       # - ./chromedriver:/root/chromedriver
     environment:
-      - DEVICE=samsung galaxy s6
+      - DEVICE=Samsung Galaxy S6
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
