@@ -43,7 +43,7 @@ services:
       - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
 
   AndroidApp:
-    image: mehr1353/docker-android-x86-9.0
+    image: mehr1353/docker-android-x86-8.1
     # image: budtmo/docker-android-x86-10.0
     privileged: true
     # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
@@ -53,7 +53,7 @@ services:
       # - ./media:/media
       - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
-      # - ./devices:/root/devices
+      - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
       # - ./src/google_play_store.apk:/root/src/google_play_store.apk
@@ -65,7 +65,7 @@ services:
     ports:
       - 6080
     environment:
-      - DEVICE=pixel
+      - DEVICE=samsung galaxy s6
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
@@ -77,7 +77,7 @@ services:
       - "autoheal=true"
 
   MobileSite:
-    image: mehr1353/docker-android-x86-9.0
+    image: mehr1353/docker-android-x86-8.1
     # image: budtmo/docker-android-x86-10.0
     privileged: true
     scale: 0
@@ -91,14 +91,14 @@ services:
       # - ./media:/media
       - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
-      # - ./devices:/root/devices
+      - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
       # - ./src/google_play_store.apk:/root/src/google_play_store.apk
       # - ./src/google_chrome.apk:/root/src/google_chrome.apk
       # - ./chromedriver:/root/chromedriver
     environment:
-      - DEVICE=pixel
+      - DEVICE=samsung galaxy s6
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
