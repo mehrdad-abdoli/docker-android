@@ -102,9 +102,9 @@ function Fake_Geo () {
   adb -s emulator-5554 emu geo fix 35.7 51.4 1400
 }
 
-# enable_proxy_if_needed
-# change_language_if_needed
-# disable_animation
-# Push
-# install_google_play
-# Fake_Geo
+enable_proxy_if_needed
+change_language_if_needed
+disable_animation
+Push
+install_google_play
+Fake_Geo
