@@ -42,6 +42,7 @@ function install_google_play () {
 function disable_animation () {
   # To improve performance
   wait_emulator_to_be_ready
+  adb shell "su root pm disable com.google.android.googlequicksearchbox"
   adb shell "settings put global window_animation_scale 0.0"
   adb shell "settings put global transition_animation_scale 0.0"
   adb shell "settings put global animator_duration_scale 0.0"
