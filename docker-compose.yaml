@@ -58,7 +58,7 @@ services:
       # - ./media:/media
       # - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
-      # - ./devices:/root/devices
+      - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
       # - ./src/google_play_store.apk:/root/src/google_play_store.apk
@@ -73,7 +73,7 @@ services:
       - AUTO_RECORD=true
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
-      - EMULATOR_ARGS=-no-snapshot -memory 2048 -no-boot-anim
+      - EMULATOR_ARGS=-memory 2048 -no-boot-anim
     labels:
       - "autoheal=true"
 
@@ -93,14 +93,14 @@ services:
       # - ./media:/media
       # - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
-      # - ./devices:/root/devices
+      - ./devices:/root/devices
       # - ./src/record.sh:/root/src/record.sh
       # - ./src/google_play_services.apk:/root/src/google_play_services.apk
       # - ./src/google_play_store.apk:/root/src/google_play_store.apk
       # - ./src/google_chrome.apk:/root/src/google_chrome.apk
       # - ./chromedriver:/root/chromedriver
     environment:
-      - DEVICE=Samsung Galaxy S6
+      - DEVICE=Pixel
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
@@ -110,6 +110,6 @@ services:
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
       - SE_OPTS=-browserTimeout 100 -timeout 100
-      - EMULATOR_ARGS=-no-snapshot -memory 2048 -no-boot-anim
+      - EMULATOR_ARGS=-memory 2048 -no-boot-anim
     labels:
       - "autoheal=true"
