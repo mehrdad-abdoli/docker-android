@@ -73,7 +73,7 @@ services:
       - AUTO_RECORD=true
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
-      - EMULATOR_ARGS=-memory 2048 -no-boot-anim
+      - EMULATOR_ARGS=-memory 1024 -no-boot-anim
     labels:
       - "autoheal=true"
 
@@ -110,6 +110,6 @@ services:
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
       - SE_OPTS=-browserTimeout 100 -timeout 100
-      - EMULATOR_ARGS=-memory 2048 -no-boot-anim
+      - EMULATOR_ARGS=-memory 1024 -no-boot-anim
     labels:
       - "autoheal=true"
