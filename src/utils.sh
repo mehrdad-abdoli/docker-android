@@ -100,14 +100,14 @@ function Push () {
   if [[ $counter -ne "8" ]]; then
     while [[ $counter -ne "8" ]];
     do
-      adb push -p /media/* /mnt/sdcard/Download
+      adb push -p /media/* /mnt/sdcard/Download/
       sleep 1;
       counter=$(QA)
       echo "Pushed images : ${counter}"
     done;
     #adb shell  'su 0 am broadcast -a android.intent.action.MEDIA_MOUNTED -d file:///mnt/sdcard/Download'
-    adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///mnt/sdcard/Download
-    adb shell  "ls /mnt/sdcard/Download"
+    adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///mnt/sdcard/Download/
+    adb shell  "ls /mnt/sdcard/Download/"
   else
       echo "Available images : ${counter}"
   fi
