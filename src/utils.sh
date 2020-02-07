@@ -26,15 +26,21 @@ function change_language_if_needed() {
 function install_google_play () {
   if [ "$MOBILE_WEB_TEST" = true ]; then
     wait_emulator_to_be_ready
+    echo "Google Play Service will be installed"
+    adb install -r "/root/src/google_play_services.apk"
+    echo "Google Play Store will be installed"
+    adb install -r "/root/src/google_play_store.apk"
     echo "Google chrome will be updated"
     adb install -r "/root/src/google_chrome.apk"
   else
-    # wait_emulator_to_be_ready
-    # echo "Google Play Service will be installed"
-    # adb install -r "/root/src/google_play_services.apk"
-    # echo "Google Play Store will be installed"
-    # adb install -r "/root/src/google_play_store.apk"
-    echo "not now"
+    wait_emulator_to_be_ready
+    echo "Google Play Service will be installed"
+    adb install -r "/root/src/google_play_services.apk"
+    echo "Google Play Store will be installed"
+    adb install -r "/root/src/google_play_store.apk"
+    echo "Google chrome will be updated"
+    adb install -r "/root/src/google_chrome.apk"
+
   fi
   # echo "Google Play Store will be installed"
   # adb install -r "/root/src/google_play_store.apk"
@@ -43,7 +49,7 @@ function install_google_play () {
 function disable_animation () {
   # To improve performance
   wait_emulator_to_be_ready
-  adb shell "su root pm disable com.google.android.googlequicksearchbox"
+  # adb shell "su root pm disable com.google.android.googlequicksearchbox"
   adb shell "settings put global window_animation_scale 0.0"
   adb shell "settings put global transition_animation_scale 0.0"
   adb shell "settings put global animator_duration_scale 0.0"
@@ -82,7 +88,6 @@ function enable_proxy_if_needed () {
 
 function QA () {
   # checker="$(adb shell 'su 0 ls /mnt/sdcard/Download/qa101.jpg > /dev/null 2>&1 && echo "yes" || echo "no"')"
-  wait_emulator_to_be_ready
   resp=$(adb shell "ls -1 /mnt/sdcard/Download/ | wc -l")
   echo $resp
 }
@@ -90,13 +95,24 @@ function QA () {
 function Push () {
   wait_emulator_to_be_ready
   echo "Pushing Images :"
-  touch -a -m /media/*
-  adb push -p /media/* /mnt/sdcard/Download
+  touch -a -m /media/*.jpg
   counter=$(QA)
-  echo "Pushed images : ${counter}"
-  adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///mnt/sdcard/Download
-  adb shell  "ls /mnt/sdcard/Download"
+  if [[ $counter -ne "8" ]]; then
+    while [[ $counter -ne "8" ]];
+    do
+      adb push -p /media/* /mnt/sdcard/Download
+      sleep 1;
+      counter=$(QA)
+      echo "Pushed images : ${counter}"
+    done;
+    #adb shell  'su 0 am broadcast -a android.intent.action.MEDIA_MOUNTED -d file:///mnt/sdcard/Download'
+    adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///mnt/sdcard/Download
+    adb shell  "ls /mnt/sdcard/Download"
+  else
+      echo "Available images : ${counter}"
+  fi
 }
+
 
 function Fake_Geo () {
   echo "Fake Geo :Please Agree"
