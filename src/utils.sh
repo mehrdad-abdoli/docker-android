@@ -124,5 +124,5 @@ enable_proxy_if_needed
 change_language_if_needed
 disable_animation
 install_google_play
-Fake_Geo
+#Fake_Geo
 Push
