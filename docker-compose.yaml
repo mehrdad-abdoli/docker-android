@@ -43,7 +43,7 @@ services:
       - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
 
   AndroidApp:
-    image: mehr1353/docker-android-x86-8.1
+    image: mehr1353/docker-android-x86-8.1:gp1.0
     # image: budtmo/docker-android-x86-10.0
     privileged: true
     devices:
@@ -78,7 +78,7 @@ services:
       - "autoheal=true"
 
   MobileSite:
-    image: mehr1353/docker-android-x86-8.1
+    image: mehr1353/docker-android-x86-8.1:gp1.0
     # image: budtmo/docker-android-x86-10.0
     privileged: true
     devices:
