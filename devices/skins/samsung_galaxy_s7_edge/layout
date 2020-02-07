@@ -19,7 +19,7 @@ parts {
                     x 1550
                     y 3146
             }
-		}	
+		}
     }
     landscape {
         background {
@@ -41,18 +41,18 @@ parts {
                      x 3424
                      y 671
             }
-		} 
+		}
     }
 
     device {
         display {
-            width   1440 
+            width   1440
             height  2560
             x       0
             y       0
         }
     }
-    
+
     controls {
         background {
             image   controls.png
@@ -78,7 +78,7 @@ parts {
                     x 624
                     y 8
             }
-			
+
 			phone-dial {
                     image button.png
                     x 8
@@ -109,7 +109,7 @@ parts {
                     x 624
                     y 537
             }
-			
+
             dpad-left {
                     image arrow_left.png
                     x 284
@@ -127,7 +127,7 @@ parts {
             }
             dpad-right {
                     image arrow_right.png
-                    x 450 
+                    x 450
                     y 216
             }
             dpad-select {
@@ -193,8 +193,8 @@ parts {
                 x 1204
                 y 11
             }
-			
-			
+
+
 			q {
                 image  key.png
                 x 17
@@ -245,8 +245,8 @@ parts {
                 x 1201
                 y 78
             }
-			
-			
+
+
 			a {
                 image  key.png
                 x 83
@@ -264,7 +264,7 @@ parts {
             }
             f {
                 image  key.png
-                x 479 
+                x 479
                 y 161
             }
             g {
@@ -292,8 +292,8 @@ parts {
                 x 1138
                 y 161
             }
-            
-            
+
+
             CAP {
                 image  key2.png
                 x 17
@@ -334,15 +334,15 @@ parts {
                 x 1006
                 y 244
             }
-			
+
 			DEL {
                 image  key2.png
                 x 1138
                 y 244
             }
-			
-			
-			
+
+
+
 			SYM {
                 image  key2.png
                 x 17
@@ -378,7 +378,7 @@ layouts {
         height    3477
         color     0xe0e0e0
         event     EV_SW:0:1
-        
+
         part1 {
             name    portrait
             x       0
@@ -411,7 +411,7 @@ layouts {
         color     0xe0e0e0
         event     EV_SW:0:0
 		dpad-rotation 3
-		
+
         part1 {
             name    landscape
             x       0
@@ -434,7 +434,7 @@ layouts {
         part4 {
             name     keyboard
             x        744
-            y        2213              
+            y        2213
         }
     }
 }
