@@ -21,19 +21,19 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
-  selenium_hub:
+  selenium_mob_hub:
     image: selenium/hub
-    container_name: selenium_hub
-    hostname: selenium_hub
+    container_name: selenium_mob_hub
+    hostname: selenium_mob_hub
     ports:
-      - "4444:4444"
+      - "6677:4444"
     healthcheck:
       test: ["CMD", "bash", "/opt/bin/check-grid.sh"]
       interval: 15s
       timeout: 30s
       retries: 5
     environment:
-      - GRID_MAX_SESSION=25
+      - GRID_MAX_SESSION=10
       - TZ=Asia/Tehran
       # In seconds, maps to "browserTimeout"
       - GRID_BROWSER_TIMEOUT=60
@@ -41,41 +41,6 @@ services:
       - GRID_TIMEOUT=120
       # In milliseconds, maps to "newSessionWaitTimeout"
       - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
-
-  AndroidApp:
-    image: mehr1353/docker-android-x86-8.1:gp1.0
-    # image: budtmo/docker-android-x86-10.0
-    privileged: true
-    devices:
-      - /dev/kvm:/dev/kvm
-    scale: 0
-    depends_on:
-      - selenium_hub
-    ports:
-      - 6080
-    volumes:
-      - /var/lib/docker/qa/vids/AndroidApp:/tmp/video
-      # - ./media:/media
-      # - ./src/utils.sh:/root/src/utils.sh
-      # - ./src/app.py:/root/src/app.py
-      # - ./devices:/root/devices
-      # - ./src/record.sh:/root/src/record.sh
-      # - ./src/google_play_services.apk:/root/src/google_play_services.apk
-      # - ./src/google_play_store.apk:/root/src/google_play_store.apk
-      # - ./src/google_chrome.apk:/root/src/google_chrome.apk
-      # - ./chromedriver:/root/chromedriver
-    environment:
-      - DEVICE=Samsung Galaxy S7 Edge
-      - CONNECT_TO_GRID=true
-      - APPIUM=true
-      - SELENIUM_HOST=selenium_hub
-      - SELENIUM_PORT=4444
-      - AUTO_RECORD=true
-      - RELAXED_SECURITY=true
-      - TZ=Asia/Tehran
-      - EMULATOR_ARGS=-no-snapshot-save -memory 1024 -no-boot-anim
-    labels:
-      - "autoheal=true"
 
   MobileSite:
     image: mehr1353/docker-android-x86-8.1:gp1.0
@@ -85,7 +50,7 @@ services:
       - /dev/kvm:/dev/kvm
     scale: 0
     depends_on:
-      - selenium_hub
+      - selenium_mob_hub
     ports:
       - 6080
     volumes:
@@ -103,7 +68,7 @@ services:
       - DEVICE=Samsung Galaxy S7 Edge
       - CONNECT_TO_GRID=true
       - APPIUM=true
-      - SELENIUM_HOST=selenium_hub
+      - SELENIUM_HOST=selenium_mob_hub
       - SELENIUM_PORT=4444
       - MOBILE_WEB_TEST=true
       - AUTO_RECORD=true

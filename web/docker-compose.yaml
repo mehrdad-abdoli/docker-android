@@ -1,0 +1,55 @@
+# Note this users version 2.1 which means it requires docker-compose 1.9
+#
+# Usage:
+# docker rmi $(docker images -f "dangling=true" -q)
+# docker-compose down
+#docker stop $(docker ps --format "{{.Names}}" --filter name=zalenium)
+#docker rm $(docker ps --format "{{.Names}}" --filter name=zalenium)
+# docker pull elgalu/selenium
+# COMPOSE_HTTP_TIMEOUT=200 docker-compose up --force-recreate -d
+# docker-compose build --no-cache
+version: '2.2'
+
+services:
+  #--------------#
+  zalenium:
+    image: "dosel/zalenium"
+    container_name: zalenium
+    hostname: zalenium
+    tty: true
+    privileged: true
+    volumes:
+      - /tmp/videos:/home/seluser/videos
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    ports:
+      - 8899:4444
+    command: >
+      start --desiredContainers 0
+            --maxTestSessions 1
+            --maxDockerSeleniumContainers 30
+            --screenWidth 1920
+            --screenHeight 1080
+            --timeZone "Asia/Tehran"
+            --videoRecordingEnabled true
+            --sauceLabsEnabled false
+            --browserStackEnabled false
+            --testingBotEnabled false
+            --startTunnel false
+            --keepOnlyFailedTests true
+            --gridUser qa
+            --gridPassword 1qaz3edc
+            --seleniumImageName "elgalu/selenium"
+            --retentionPeriod 5
+    #      --debugEnabled true
+
+    environment:
+      - HOST_UID
+      - HOST_GID
+      #- PULL_SELENIUM_IMAGE=true
+      - ZALENIUM_PROXY_CLEANUP_TIMEOUT=180
+      - SEL_BROWSER_TIMEOUT_SECS=1000
+      - TIME_TO_WAIT_TO_START=120000
+      - NEW_SESSION_WAIT_TIMEOUT=600000
+      - WAIT_FOR_AVAILABLE_NODES=true
+      #- zalenium_no_proxy=172.16/12, 10.0.0.0/8, *.local, 192.168/16, localhost, 127.0.0.1
