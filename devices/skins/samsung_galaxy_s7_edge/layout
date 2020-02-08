@@ -66,25 +66,11 @@ layouts {
             x       0
             y       0
         }
-
-
-
-        part3 {
+        part2 {
             name    device
             x       456
             y       498
         }
-        part4 {
-            name    controls
-            x       2660
-            y       883
-        }
-        part5 {
-            name    keyboard
-            x       2385
-            y       1847
-        }
-
     }
 
     landscape {
@@ -105,18 +91,6 @@ layouts {
             x         777
             y         1854
             rotation  3s
-        }
-
-        part3 {
-            name     controls
-            x        2506
-            y        2072
-        }
-
-        part4 {
-            name     keyboard
-            x        744
-            y        2213
         }
     }
 }
