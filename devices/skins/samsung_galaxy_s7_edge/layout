@@ -52,6 +52,7 @@ parts {
             y       0
         }
     }
+
 }
 
 layouts {
@@ -68,6 +69,12 @@ layouts {
         }
 
         part2 {
+            name    landscape
+            x       1000
+            y       0
+        }
+
+        part3 {
             name    device
             x       456
             y       498
@@ -79,8 +86,7 @@ layouts {
         height    3477
         color     0xe0e0e0
         event     EV_SW:0:0
-
-		    dpad-rotation 3
+		dpad-rotation 3
 
         part1 {
             name    landscape
@@ -89,14 +95,20 @@ layouts {
         }
 
         part2 {
+            name    portrait
+            x       950
+            y       0
+        }
+
+        part3 {
             name      device
             x         777
             y         1854
             rotation  3s
         }
+
     }
 }
-
 
 network {
     speed  full
