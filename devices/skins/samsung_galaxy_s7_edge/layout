@@ -92,7 +92,7 @@ layouts {
         height    3477
         color     0xe0e0e0
         event     EV_SW:0:0
-		dpad-rotation 3
+		    dpad-rotation 3
 
         part1 {
             name    landscape
@@ -119,10 +119,6 @@ layouts {
             y        2213
         }
     }
-}
-
-keyboard {
-    charmap qwerty2
 }
 
 network {
