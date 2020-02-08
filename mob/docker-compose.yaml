@@ -53,6 +53,8 @@ services:
       - selenium_mob_hub
     ports:
       - 6080
+    cpus: "1"
+    mem_limit: "2048m"
     volumes:
       - /var/lib/docker/qa/vids/MobileSite:/tmp/video
       # - ./media:/media

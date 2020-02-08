@@ -27,6 +27,8 @@ services:
     hostname: selenium_app_hub
     ports:
       - "4444:4444"
+    cpus: "1"
+    mem_limit: "2048m"  
     healthcheck:
       test: ["CMD", "bash", "/opt/bin/check-grid.sh"]
       interval: 15s
