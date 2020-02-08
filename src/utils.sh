@@ -87,7 +87,6 @@ function enable_proxy_if_needed () {
 }
 
 function QA () {
-  # checker="$(adb shell 'su 0 ls /mnt/sdcard/Download/qa101.jpg > /dev/null 2>&1 && echo "yes" || echo "no"')"
   resp=$(adb shell "ls -1 /mnt/sdcard/Download/ | wc -l")
   echo $resp
 }

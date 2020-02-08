@@ -98,7 +98,6 @@ restartAndroidApp () {
   : $(HowManyHealth AndroidApp $1)
 }
 QA () {
-  # checker="$(adb shell 'su 0 ls /mnt/sdcard/Pictures/qa101.jpg > /dev/null 2>&1 && echo "yes" || echo "no"')"
   check=$(docker exec -it mob_$2_$1  adb shell 'su 0 ls -1 /mnt/sdcard/Pictures/ | wc -l')
   if [[ $check -ne "8" ]]; then
     resp=$(docker exec -i mob_$2_$1 ./src/sheypoor.sh)
