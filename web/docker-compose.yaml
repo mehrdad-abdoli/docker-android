@@ -26,8 +26,8 @@ services:
       - 8899:4444
     command: >
       start --desiredContainers 0
-            --maxTestSessions 1
-            --maxDockerSeleniumContainers 30
+            --maxTestSessions 3
+            --maxDockerSeleniumContainers 18
             --screenWidth 1920
             --screenHeight 1080
             --timeZone "Asia/Tehran"
@@ -47,9 +47,9 @@ services:
       - HOST_UID
       - HOST_GID
       #- PULL_SELENIUM_IMAGE=true
-      - ZALENIUM_PROXY_CLEANUP_TIMEOUT=180
-      - SEL_BROWSER_TIMEOUT_SECS=1000
-      - TIME_TO_WAIT_TO_START=120000
-      - NEW_SESSION_WAIT_TIMEOUT=600000
-      - WAIT_FOR_AVAILABLE_NODES=true
+      # - ZALENIUM_PROXY_CLEANUP_TIMEOUT=180
+      # - SEL_BROWSER_TIMEOUT_SECS=1000
+      # - TIME_TO_WAIT_TO_START=120000
+      # - NEW_SESSION_WAIT_TIMEOUT=600000
+      # - WAIT_FOR_AVAILABLE_NODES=true
       #- zalenium_no_proxy=172.16/12, 10.0.0.0/8, *.local, 192.168/16, localhost, 127.0.0.1
