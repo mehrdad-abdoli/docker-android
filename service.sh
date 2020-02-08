@@ -74,7 +74,7 @@ HowManyHealth ()
 }
 
 restartZA () {
-  cd /home/mabdoli/web
+  cd /home/mabdoli/dockers/web
 	if [ "$1" = 'up' ]; then
     : $(COMPOSE_HTTP_TIMEOUT=200 docker-compose up --force-recreate -d)
 	else
@@ -82,7 +82,7 @@ restartZA () {
 	fi
 }
 restartMobileSite () {
-  cd /home/mabdoli/mob
+  cd /home/mabdoli/dockers/mob
   : $(docker-compose down)
   # : $(docker stop $(docker ps -aq))
   # : $(docker rm $(docker ps -aq))
@@ -90,7 +90,7 @@ restartMobileSite () {
   : $(HowManyHealth MobileSite $1)
 }
 restartAndroidApp () {
-  cd /home/mabdoli/mob
+  cd /home/mabdoli/dockers/mob
   : $(docker-compose down)
   : $(docker stop $(docker ps -aq))
   : $(docker rm $(docker ps -aq))
