@@ -110,6 +110,10 @@ layouts {
     }
 }
 
+keyboard {
+    charmap qwerty2
+}
+
 network {
     speed  full
     delay  none
