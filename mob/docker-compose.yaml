@@ -48,7 +48,7 @@ services:
     privileged: true
     devices:
       - /dev/kvm:/dev/kvm
-    scale: 0
+    scale: 5
     depends_on:
       - selenium_mob_hub
     ports:
