@@ -65,7 +65,7 @@ services:
       - ./videos/AndroidApp:/tmp/video
       - ./media:/media
       - ./src/utils.sh:/root/src/utils.sh
-      - ./apps/Sheypoor-PlayStoreDebug.apk:/root/apps/Sheypoor-PlayStoreDebug.apk
+      - ./APKS/Sheypoor-PlayStoreDebug.apk:/root/Sheypoor-PlayStoreDebug.apk
       - ./src/record.sh:/root/src/record.sh
       - ./devices:/root/devices
       - ./src/google_play_services.apk:/root/src/google_play_services.apk
