@@ -59,8 +59,8 @@ services:
   AndroidApp:
     image: butomo1989/docker-android-x86-8.1
     privileged: true
-    devices:
-      - /dev/kvm:/dev/kvm
+    # devices:
+    #   - /dev/kvm:/dev/kvm
     volumes:
       - ./videos/AndroidApp:/tmp/video
       - ./media:/media
@@ -85,7 +85,7 @@ services:
       - AUTO_RECORD=true
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
-      - EMULATOR_ARGS=-no-snapshot-save -memory 1024 -no-boot-anim
+      - EMULATOR_ARGS=-memory 2048 -no-boot-anim
     labels:
       - "autoheal=true"
 
@@ -94,8 +94,8 @@ services:
   MobileSite:
     image: butomo1989/docker-android-x86-8.1
     privileged: true
-    devices:
-      - /dev/kvm:/dev/kvm
+    # devices:
+    #   - /dev/kvm:/dev/kvm
     scale: 0
     depends_on:
       - selenium_hub
@@ -105,7 +105,7 @@ services:
     volumes:
       - ./videos/MobileSite:/tmp/video
       - ./media:/media
-      - ./src:/root/src
+      # - ./src:/root/src
       - ./devices:/root/devices
       - ./chromedriver:/root/chromedriver
     environment:
@@ -119,6 +119,6 @@ services:
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
       - SE_OPTS=-browserTimeout 100 -timeout 100
-      - EMULATOR_ARGS=-no-snapshot-save -memory 1024 -no-boot-anim
+      - EMULATOR_ARGS=-memory 2048
     labels:
       - "autoheal=true"
