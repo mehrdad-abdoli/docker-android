@@ -50,7 +50,7 @@ services:
     privileged: true
     devices:
       - /dev/kvm:/dev/kvm
-    scale: 16
+    scale: 1
     depends_on:
       - selenium_app_hub
     ports:
@@ -59,15 +59,15 @@ services:
     # mem_limit: "2048m"
     volumes:
       - /var/lib/docker/qa/vids/AndroidApp:/tmp/video
-      - ./media:/media
-      - ./src/utils.sh:/root/src/utils.sh
-      - ./src/app.py:/root/src/app.py
+      - ../media:/media
+      - ../src/utils.sh:/root/src/utils.sh
+      - ../src/app.py:/root/src/app.py
       - ../devices:/root/devices
-      - ./src/record.sh:/root/src/record.sh
-      - ./src/google_play_services.apk:/root/src/google_play_services.apk
-      - ./src/google_play_store.apk:/root/src/google_play_store.apk
-      - ./src/google_chrome.apk:/root/src/google_chrome.apk
-      # - ./chromedriver:/root/chromedriver
+      - ../src/record.sh:/root/src/record.sh
+      - ../src/google_play_services.apk:/root/src/google_play_services.apk
+      - ../src/google_play_store.apk:/root/src/google_play_store.apk
+      - ../src/google_chrome.apk:/root/src/google_chrome.apk
+      # - ../chromedriver:/root/chromedriver
     environment:
       - DEVICE=Samsung Galaxy S10 E
       - CONNECT_TO_GRID=true
