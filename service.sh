@@ -10,14 +10,14 @@ ports ()
 }
 GetDockerName ()
 {
-  containers=$(docker ps --format "{{.Names}}" --filter name=AndroidApp)
+  containers=$(docker ps --format "{{.Names}}" --filter name=${2})
   if [[ ! -z "$containers" ]]; then
     # loop through all containers
     for container in $containers;do
       name="$(docker exec -i $container curl -s localhost:4723/wd/hub/sessions | jq -r '.value[0].capabilities.name')"
       # $(docker exec -i $container adb logcat -c)
       # name="Chat_Test_Saler_Build4221_PRstaging_1"
-      if [[ $name == "$1" ]]; then
+      if [[ $name == "${1}" ]]; then
         dockername="$container"
         break
       else
