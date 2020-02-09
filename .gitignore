@@ -7,3 +7,6 @@
 coverage.xml
 xunit.xml
 coverage/*
+/apps
+/src/nodeconfig.json
+/videos
