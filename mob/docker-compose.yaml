@@ -11,6 +11,8 @@ version: '2.2'
 services:
   autoheal:
     image: willfarrell/autoheal
+    container_name: autoheal_mob
+    hostname: autoheal_mob
     environment:
       - AUTOHEAL_CONTAINER_LABEL=autoheal
       - AUTOHEAL_INTERVAL=180   # check every 5 seconds

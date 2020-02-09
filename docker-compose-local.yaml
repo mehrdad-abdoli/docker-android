@@ -15,24 +15,26 @@
 # cat /dev/null > ~/.bash_history && history -c && exit
 # docker exec -it mob_AndroidApp_1 tail -f /var/log/supervisor/docker-android.stdout.log
 # docker exec -it mob_MobileSite_2 tail -f /var/log/supervisor/docker-android.stdout.log
-# COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=1 --scale MobileSite=1 --remove-orphans  -d
+# COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=0 --scale MobileSite=1 --remove-orphans  -d
 version: '2.2'
 
 services:
   autoheal:
     image: willfarrell/autoheal
+    container_name: autoheal
+    hostname: autoheal
     environment:
       - AUTOHEAL_CONTAINER_LABEL=autoheal
-      - AUTOHEAL_INTERVAL=10   # check every 5 seconds
-      - AUTOHEAL_START_PERIOD=180   # wait 0 second before first health check
-      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=10   # Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below)
+      - AUTOHEAL_INTERVAL=180   # check every 5 seconds
+      - AUTOHEAL_START_PERIOD=300   # wait 0 second before first health check
+      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=30   # Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below)
       - DOCKER_SOCK=/var/run/docker.sock   # Unix socket for curl requests to Docker API
-      - CURL_TIMEOUT=30     # --max-time seconds for curl requests to Docker API
+      - CURL_TIMEOUT=10     # --max-time seconds for curl requests to Docker API
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
   selenium_hub:
-    image: selenium/hub:3.14
+    image: selenium/hub
     container_name: selenium_hub
     hostname: selenium_hub
     ports:
@@ -43,7 +45,7 @@ services:
       timeout: 30s
       retries: 5
     environment:
-      - GRID_MAX_SESSION=30
+      - GRID_MAX_SESSION=20
       - TZ=Asia/Tehran
       # In seconds, maps to "browserTimeout"
       - GRID_BROWSER_TIMEOUT=60
@@ -51,24 +53,20 @@ services:
       - GRID_TIMEOUT=120
       # In milliseconds, maps to "newSessionWaitTimeout"
       - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
-    labels:
-      - "autoheal=true"
 
 
   # Docker-Android for Android application testing
   AndroidApp:
     image: butomo1989/docker-android-x86-8.1
     privileged: true
-    # Change path of apk that you want to test. I use sample_apk that I provide in folder "example"
+    devices:
+      - /dev/kvm:/dev/kvm
     volumes:
       - ./videos/AndroidApp:/tmp/video
       - ./media:/media
-      - ./src/utils.sh:/root/src/utils.sh
+      - ./src:/root/src
       - ./devices:/root/devices
-      - ./src/record.sh:/root/src/record.sh
-      - ./src/google_play_store.apk:/root/google_play_store.apk
-      - ./src/google_play_services.apk:/root/google_play_services.apk
-      - ./src/google_chrome.apk:/root/google_chrome.apk
+      - ./src/recle_chrome.apk:/root/google_chrome.apk
       - ./chromedriver:/root/chromedriver
 
     # Increase scale number if needed
@@ -76,10 +74,10 @@ services:
     depends_on:
       - selenium_hub
     ports:
-      - 6080
-      - 5555
+      - 6080:6080
+      - 5555:5555
     environment:
-      - DEVICE=Samsung Galaxy S6
+      - DEVICE=Samsung Galaxy S10 E
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
@@ -87,6 +85,7 @@ services:
       - AUTO_RECORD=true
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
+      - EMULATOR_ARGS=-no-snapshot-save -memory 1024 -no-boot-anim
     labels:
       - "autoheal=true"
 
@@ -95,25 +94,22 @@ services:
   MobileSite:
     image: butomo1989/docker-android-x86-8.1
     privileged: true
-    # Increase scale number if needed
+    devices:
+      - /dev/kvm:/dev/kvm
     scale: 0
     depends_on:
       - selenium_hub
     ports:
-      - 6080
+      - 6080:6080
+      - 5555:5555
     volumes:
       - ./videos/MobileSite:/tmp/video
       - ./media:/media
-      - /dev/shm:/dev/shm
-      - ./src/utils.sh:/root/src/utils.sh
+      - ./src:/root/src
       - ./devices:/root/devices
-      - ./src/record.sh:/root/src/record.sh
-      - ./src/google_play_store.apk:/root/google_play_store.apk
-      - ./src/google_play_services.apk:/root/google_play_services.apk
-      - ./src/google_chrome.apk:/root/google_chrome.apk
       - ./chromedriver:/root/chromedriver
     environment:
-      - DEVICE=Samsung Galaxy S6
+      - DEVICE=Samsung Galaxy S10 E
       - CONNECT_TO_GRID=true
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
@@ -123,5 +119,6 @@ services:
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
       - SE_OPTS=-browserTimeout 100 -timeout 100
+      - EMULATOR_ARGS=-no-snapshot-save -memory 1024 -no-boot-anim
     labels:
       - "autoheal=true"
