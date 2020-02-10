@@ -1,12 +1,11 @@
 FROM mehr1353/appium1.15.1:2.0
-LABEL maintainer "Budi Utomo <budtmo.os@gmail.com>"
+LABEL maintainer "Mehrdad Abdoli <mehr1353@gmail.com>"
 
 #=============
 # Set WORKDIR
 #=============
 WORKDIR /root
-#ENV http_proxy devopt.net:8888
-#ENV https_proxy devopt.net:8888
+ENV QEMU_AUDIO_DRV="none"
 
 #==================
 # General Packages
@@ -98,7 +97,7 @@ ARG ANDROID_VERSION=8.1
 ARG API_LEVEL=27
 ARG PROCESSOR=x86
 ARG SYS_IMG=x86
-ARG IMG_TYPE=google_apis_playstore
+ARG IMG_TYPE=google_apis
 ARG BROWSER=chrome
 ARG CHROME_DRIVER=79.0.3945.36
 ARG GOOGLE_PLAY_SERVICE=12.8.74

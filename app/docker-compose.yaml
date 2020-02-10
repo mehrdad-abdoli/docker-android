@@ -77,6 +77,6 @@ services:
       - AUTO_RECORD=true
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
-      - EMULATOR_ARGS=-no-snapshot-save -memory 1024 -no-boot-anim
+      - EMULATOR_ARGS=-no-snapshot-save -memory 1536 -no-boot-anim -noaudio -no-audio -qemu -m 1536 -enable-kvm 
     labels:
       - "autoheal=true"
