@@ -46,10 +46,11 @@ function install_google_play () {
   # adb install -r "/root/src/google_play_store.apk"
 }
 
-function disable_animation () {
+function tunning_and_optimization () {
   # To improve performance
   wait_emulator_to_be_ready
-  # adb shell "su root pm disable com.google.android.googlequicksearchbox"
+  adb shell "su root pm disable com.google.android.googlequicksearchbox"
+  # adb root && adb shell pm disable com.google.android.googlequicksearchbox
   adb shell "settings put global window_animation_scale 0.0"
   adb shell "settings put global transition_animation_scale 0.0"
   adb shell "settings put global animator_duration_scale 0.0"
@@ -116,12 +117,14 @@ function Push () {
 function Fake_Geo () {
   echo "Fake Geo :Please Agree"
   adb shell "settings put secure location_providers_allowed +network"
+  sleep 2
+  adb shell input tap 860 1600
   adb -s emulator-5554 emu geo fix 35.7 51.4 1400
 }
 
 enable_proxy_if_needed
 change_language_if_needed
-disable_animation
+tunning_and_optimization
 install_google_play
-#Fake_Geo
+Fake_Geo
 Push
