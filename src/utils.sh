@@ -40,7 +40,6 @@ function install_google_play () {
     # adb install -r "/root/src/google_play_store.apk"
     # echo "Google chrome will be updated"
     # adb install -r "/root/src/google_chrome.apk"
-
   fi
   # echo "Google Play Store will be installed"
   # adb install -r "/root/src/google_play_store.apk"
