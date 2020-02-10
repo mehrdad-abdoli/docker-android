@@ -58,7 +58,8 @@ services:
     # cpus: "1"
     mem_limit: "4096m"
     volumes:
-      - /var/lib/docker/qa/vids/MobileSite:/tmp/video
+      # - /var/lib/docker/qa/vids/MobileSite:/tmp/video
+      - /home/qa/web/videos/MobileSite:/tmp/video
       # - ./media:/media
       # - ./src/utils.sh:/root/src/utils.sh
       # - ./src/app.py:/root/src/app.py
