@@ -45,18 +45,18 @@ services:
       - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
 
   MobileSite:
-    image: mehr1353/docker-android-x86-8.1:gp1.0
+    image: mehr1353/docker-android-x86-8.1:ga1.0
     # image: budtmo/docker-android-x86-10.0
     privileged: true
     devices:
       - /dev/kvm:/dev/kvm
-    scale: 2
+    scale: 5
     depends_on:
       - selenium_mob_hub
     ports:
       - 6080
     # cpus: "1"
-    # mem_limit: "3072m"
+    mem_limit: "4096m"
     volumes:
       - /var/lib/docker/qa/vids/MobileSite:/tmp/video
       # - ./media:/media
@@ -79,6 +79,7 @@ services:
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
       - SE_OPTS=-browserTimeout 100 -timeout 100
-      - EMULATOR_ARGS=-no-snapshot-save -memory 1024 -no-boot-anim
+      - QEMU_AUDIO_DRV=none
+      - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -noaudio -no-audio -qemu -m 2048
     labels:
       - "autoheal=true"

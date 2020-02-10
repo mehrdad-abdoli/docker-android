@@ -45,18 +45,18 @@ services:
       - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
 
   AndroidApp:
-    image: mehr1353/docker-android-x86-8.1:gp1.0
+    image: mehr1353/docker-android-x86-8.1:ga1.0
     # image: budtmo/docker-android-x86-8.1
     privileged: true
     devices:
       - /dev/kvm:/dev/kvm
-    scale: 16
+    scale: 1
     depends_on:
       - selenium_app_hub
     ports:
       - 6080
     # cpus: "1"
-    # mem_limit: "2048m"
+    mem_limit: "4096m"
     volumes:
       - /var/lib/docker/qa/vids/AndroidApp:/tmp/video
       # - ../media:/media
