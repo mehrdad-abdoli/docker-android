@@ -4,6 +4,7 @@
 # docker volume rm $(docker volume ls -qf dangling=true)
 # docker restart $(docker ps -f health=unhealthy)
 # docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
+# sudo docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm
 # docker exec -it mob_AndroidApp_1 tail -f /var/log/supervisor/docker-android.stdout.log
 # COMPOSE_HTTP_TIMEOUT=200 docker-compose up --scale AndroidApp=8 --scale MobileSite=0 --remove-orphans  -d
 version: '2.2'
