@@ -72,7 +72,8 @@ RUN apt-get -qqy update && apt-get -qqy install --no-install-recommends \
     bridge-utils \
  && apt clean all \
  && rm -rf /var/lib/apt/lists/*
-
+ 
+RUN adduser `id -un` kvm
 #=======
 # noVNC
 # Use same commit id that docker-selenium uses

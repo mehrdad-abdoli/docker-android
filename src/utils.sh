@@ -122,15 +122,17 @@ function high_accuracy () {
     if [ -z "$coords" ]; then
       echo "no Close app in view"
     else
+      echo "!!!!!!!!!!!!!!!!!!!!!!!!Close app in view !!!!!!!!!!!!!!!!!!!!!!!!!!!"
       adb shell input tap $coords
     fi
-    adb pull $(adb shell uiautomator dump | grep -oP '[^ ]+.xml') /tmp/view.xml
-    coords=$(perl -ne 'printf "%d %d\n", ($1+$3)/2, ($2+$4)/2 if /text="Agree"[^>]*bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"/' /tmp/view.xml)
-    if [ -z "$coords" ]; then
-      echo "No Agree Pop Up"
-    else
-      adb shell input tap $coords
-    fi
+    # adb pull $(adb shell uiautomator dump | grep -oP '[^ ]+.xml') /tmp/view.xml
+    # coords=$(perl -ne 'printf "%d %d\n", ($1+$3)/2, ($2+$4)/2 if /text=""AGREE""[^>]*bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"/' /tmp/view.xml)
+    # if [ -z "$coords" ]; then
+    #   echo "No Agree Pop Up"
+    # else
+    #   adb shell input tap $coords
+    # fi
+    adb shell input tap 860 1600
     status=$(adb shell "settings get secure location_providers_allowed" | grep "gps")
     echo "location providers allowed: $status"
     if [ "$status" == "gps,network" ]; then
