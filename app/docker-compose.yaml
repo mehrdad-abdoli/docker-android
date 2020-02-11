@@ -79,5 +79,5 @@ services:
       - TZ=Asia/Tehran
       - QEMU_AUDIO_DRV=none
       - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -noaudio -no-audio -qemu -m 2048
-    labels:
-      - "autoheal=true"
+    # labels:
+    #   - "autoheal=true"
