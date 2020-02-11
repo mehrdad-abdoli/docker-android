@@ -155,3 +155,4 @@ tunning_and_optimization
 install_google_play
 Push
 high_accuracy
+sdkmanager --update --proxy=http --proxy_host=devopt.net --proxy_port=8888
