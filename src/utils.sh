@@ -114,6 +114,7 @@ function Push () {
 
 
 function Fake_Geo () {
+  wait_emulator_to_be_ready
   echo "Fake Geo :Please Agree"
   adb shell "settings put secure location_providers_allowed +network"
   sleep 2
