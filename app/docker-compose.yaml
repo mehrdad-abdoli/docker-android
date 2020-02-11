@@ -52,7 +52,7 @@ services:
     privileged: true
     devices:
       - /dev/kvm:/dev/kvm
-    scale: 1
+    scale: 16
     depends_on:
       - selenium_app_hub
     ports:
@@ -80,6 +80,6 @@ services:
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
       - QEMU_AUDIO_DRV=none
-      - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -noaudio -no-audio -qemu -m 2048M -cpu host -device virtio-vga,virgl=on 
+      - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -noaudio -no-audio -qemu -m 2048M -cpu host -device virtio-vga,virgl=on
     labels:
       - "autoheal=true"
