@@ -92,10 +92,9 @@ function QA () {
 
 function Push () {
   wait_emulator_to_be_ready
-  echo "Pushing Images :"
-  touch -a -m /media/*.jpg
   counter=$(QA)
   if [[ $counter -ne "8" ]]; then
+    : $(touch -a -m /media/*.jpg)
     while [[ $counter -ne "8" ]];
     do
       adb push -p /media/* /mnt/sdcard/Download/
@@ -112,13 +111,26 @@ function Push () {
 }
 
 
-function Fake_Geo () {
+function high_accuracy () {
   wait_emulator_to_be_ready
   echo "Fake Geo :Please Agree"
   network=false
   while [ "$network" == false ]; do
     adb shell "settings put secure location_providers_allowed +network"
-    adb shell input tap 860 1600
+    adb pull $(adb shell uiautomator dump | grep -oP '[^ ]+.xml') /tmp/view.xml
+    coords=$(perl -ne 'printf "%d %d\n", ($1+$3)/2, ($2+$4)/2 if /text="Close app"[^>]*bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"/' /tmp/view.xml)
+    if [ -z "$coords" ]; then
+      echo "no Close app in view"
+    else
+      adb shell input tap $coords
+    fi
+    adb pull $(adb shell uiautomator dump | grep -oP '[^ ]+.xml') /tmp/view.xml
+    coords=$(perl -ne 'printf "%d %d\n", ($1+$3)/2, ($2+$4)/2 if /text="Agree"[^>]*bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"/' /tmp/view.xml)
+    if [ -z "$coords" ]; then
+      echo "No Agree Pop Up"
+    else
+      adb shell input tap $coords
+    fi
     status=$(adb shell "settings get secure location_providers_allowed" | grep "gps")
     echo "location providers allowed: $status"
     if [ "$status" == "gps,network" ]; then
@@ -132,9 +144,12 @@ function Fake_Geo () {
   adb -s emulator-5554 emu geo fix 51.4 35.7 1400
 }
 
+
+
+
 enable_proxy_if_needed
 change_language_if_needed
 tunning_and_optimization
 install_google_play
-Fake_Geo
 Push
+high_accuracy
