@@ -120,7 +120,7 @@ function Fake_Geo () {
   adb shell input tap 860 1600
   sleep 1
   adb shell input tap 860 1600
-  adb -s emulator-5554 emu geo fix 35.7 51.4 1400
+  adb -s emulator-5554 emu geo fix 51.4 35.7 1400
 }
 
 enable_proxy_if_needed
