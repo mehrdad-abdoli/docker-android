@@ -6,7 +6,16 @@ function start() {
     name="$(curl -s localhost:4723/wd/hub/sessions | jq -r '.value[0].capabilities.name').mp4"
     mkdir -p ${VIDEO_PATH}/${PR}/${BUILD}
     echo "Start video recording"
-    ffmpeg -video_size 1598x898 -framerate 15 -f x11grab -i $DISPLAY ${VIDEO_PATH}/${PR}/${BUILD}/${name} -y
+    # ffmpeg -video_size 1598x898 -framerate 15 -f x11grab -i $DISPLAY ${VIDEO_PATH}/${PR}/${BUILD}/${name} -y
+    adb shell screenrecord --size 1598x898 --bit-rate 4000000 --bugreport /mnt/sdcard/Download/${name}
+
+		# Download the video
+		adb pull /mnt/sdcard/Download/${name}
+
+    mv ${name} ${VIDEO_PATH}/${PR}/${BUILD}/
+
+		# Delete the video from the device
+		adb shell rm /mnt/sdcard/Download/${name}
 }
 
 function stop() {
