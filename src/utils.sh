@@ -143,7 +143,14 @@ function high_accuracy () {
       adb shell input tap 860 1600
     fi
   done
-  adb -s emulator-5554 emu geo fix 51.4 35.7 1400
+  # adb -s emulator-5554 emu geo fix 51.4 35.7 5 1400
+  {
+  sleep 3
+  echo geo fix 51.4 35.7 5
+  sleep 3
+  echo exit
+  } | telnet localhost 5554
+
 }
 
 
