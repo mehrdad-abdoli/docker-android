@@ -5,7 +5,6 @@ function wait_emulator_to_be_ready () {
   while [ "$boot_completed" == false ]; do
     status=$(adb wait-for-device shell getprop dev.bootcomplete | grep "1")
     echo "Boot Status: $status"
-
     if [ "$status" == "1" ]; then
       boot_completed=true
     else
@@ -33,7 +32,7 @@ function install_google_play () {
     echo "Google chrome will be updated"
     adb install -r "/root/src/google_chrome.apk"
   else
-    wait_emulator_to_be_ready
+    # wait_emulator_to_be_ready
     # echo "Google Play Service will be installed"
     # adb install -r "/root/src/google_play_services.apk"
     # echo "Google Play Store will be installed"
@@ -116,11 +115,19 @@ function Push () {
 function Fake_Geo () {
   wait_emulator_to_be_ready
   echo "Fake Geo :Please Agree"
-  adb shell "settings put secure location_providers_allowed +network"
-  sleep 2
-  adb shell input tap 860 1600
-  sleep 1
-  adb shell input tap 860 1600
+  network=false
+  while [ "$network" == false ]; do
+    adb shell "settings put secure location_providers_allowed +network"
+    adb shell input tap 860 1600
+    status=$(adb shell "settings get secure location_providers_allowed" | grep "gps")
+    echo "location providers allowed: $status"
+    if [ "$status" == "gps,network" ]; then
+      network=true
+      echo "****************** High Accuracy IS set successfuly ****************"
+    else
+      adb shell input tap 860 1600
+    fi
+  done
   adb -s emulator-5554 emu geo fix 51.4 35.7 1400
 }
 
