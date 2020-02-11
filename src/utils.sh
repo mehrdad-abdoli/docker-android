@@ -31,8 +31,8 @@ function install_google_play () {
     # adb install -r "/root/src/google_play_store.apk"
     echo "Google chrome will be updated"
     adb install -r "/root/src/google_chrome.apk"
-  else
-    # wait_emulator_to_be_ready
+  # else
+  #   # wait_emulator_to_be_ready
     # echo "Google Play Service will be installed"
     # adb install -r "/root/src/google_play_services.apk"
     # echo "Google Play Store will be installed"
@@ -124,6 +124,7 @@ function Fake_Geo () {
     if [ "$status" == "gps,network" ]; then
       network=true
       echo "****************** High Accuracy IS set successfuly ****************"
+      break
     else
       adb shell input tap 860 1600
     fi
