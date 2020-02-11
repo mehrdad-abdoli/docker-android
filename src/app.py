@@ -201,6 +201,7 @@ def create_node_config(avd_name: str, browser_name: str, appium_host: str, appiu
 
 def run():
     """Run app."""
+    sdkmanager --update --proxy=http --proxy_host=devopt.net --proxy_port=8888
     device = os.getenv('DEVICE', 'Nexus 5')
     logger.info('Device: {device}'.format(device=device))
     custom_args=os.getenv('EMULATOR_ARGS', '')
