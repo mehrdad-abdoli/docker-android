@@ -76,7 +76,7 @@ services:
       - APPIUM=true
       - SELENIUM_HOST=selenium_app_hub
       - SELENIUM_PORT=4444
-      - AUTO_RECORD=false
+      - AUTO_RECORD=true
       - RELAXED_SECURITY=true
       - TZ=Asia/Tehran
       - QEMU_AUDIO_DRV=none
