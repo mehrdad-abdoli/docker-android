@@ -82,6 +82,6 @@ services:
       - TZ=Asia/Tehran
       - SE_OPTS=-browserTimeout 100 -timeout 100
       - QEMU_AUDIO_DRV=none
-      - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -noaudio -no-audio -qemu -m 2048
+      - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -qemu -m 2048M -cpu host
     labels:
       - "autoheal=true"
