@@ -144,7 +144,10 @@ function high_accuracy () {
     fi
   done
   # adb -s emulator-5554 emu geo fix 51.4 35.7 5 1400
+  auth=$(cat /root/.emulator_console_auth_token)
   {
+  sleep 3
+  auth $auth
   sleep 3
   echo geo fix 51.4 35.7 5
   sleep 3
