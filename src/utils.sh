@@ -147,7 +147,7 @@ function high_accuracy () {
   auth=$(cat /root/.emulator_console_auth_token)
   {
   sleep 3
-  auth $auth
+  echo auth $auth
   sleep 3
   echo geo fix 51.4 35.7 5
   sleep 3
