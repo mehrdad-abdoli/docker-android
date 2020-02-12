@@ -144,16 +144,16 @@ function high_accuracy () {
     fi
   done
   adb emu geo fix 51.4 35.7 5
-  auth=$(cat /root/.emulator_console_auth_token)
-  echo "auth is $auth"
-  {
-  sleep 3
-  echo "auth $auth"
-  sleep 3
-  echo "geo fix 51.4 35.7 5"
-  sleep 3
-  echo "exit"
-  } | telnet localhost 5554
+  # auth=$(cat /root/.emulator_console_auth_token)
+  # echo "auth is $auth"
+  # {
+  # sleep 3
+  # echo "auth $auth"
+  # sleep 3
+  # echo "geo fix 51.4 35.7 5"
+  # sleep 3
+  # echo "exit"
+  # } | telnet localhost 5554
 
 }
 
