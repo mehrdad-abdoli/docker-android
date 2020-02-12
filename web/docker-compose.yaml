@@ -19,7 +19,7 @@ services:
     tty: true
     privileged: true
     volumes:
-      - /var/lib/docker/qa/vids/Web:/home/seluser/videos
+      - /tmp/videos:/home/seluser/videos
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     ports:
