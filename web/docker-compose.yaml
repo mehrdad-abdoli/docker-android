@@ -27,7 +27,7 @@ services:
     command: >
       start --desiredContainers 0
             --maxTestSessions 3
-            --maxDockerSeleniumContainers 18
+            --maxDockerSeleniumContainers 40
             --screenWidth 1920
             --screenHeight 1080
             --timeZone "Asia/Tehran"
