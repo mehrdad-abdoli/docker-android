@@ -143,15 +143,16 @@ function high_accuracy () {
       adb shell input tap 860 1600
     fi
   done
-  # adb -s emulator-5554 emu geo fix 51.4 35.7 5 1400
+  adb emu geo fix 51.4 35.7 5
   auth=$(cat /root/.emulator_console_auth_token)
+  echo "auth is $auth"
   {
   sleep 3
-  echo auth $auth
+  echo "auth $auth"
   sleep 3
-  echo geo fix 51.4 35.7 5
+  echo "geo fix 51.4 35.7 5"
   sleep 3
-  echo exit
+  echo "exit"
   } | telnet localhost 5554
 
 }
