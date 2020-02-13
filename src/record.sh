@@ -7,8 +7,8 @@ function start() {
     mkdir -p ${VIDEO_PATH}/${PR}/${BUILD}
     echo "Start video recording"
     # ffmpeg -video_size 1598x898 -framerate 15 -f x11grab -i $DISPLAY ${VIDEO_PATH}/${PR}/${BUILD}/${name} -y
-    # adb shell screenrecord --size 1598x898 --bit-rate 3000000 --time-limit 180 --bugreport /mnt/sdcard/Download/${name}
-    adb shell "screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_1.mp4; screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_2.mp4; screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_3.mp4"
+    # adb shell screenrecord --size 1598x898 --bit-rate 2000000 --time-limit 180 --bugreport /mnt/sdcard/Download/${name}
+    adb shell "screenrecord --size 1598x898 --bit-rate 2000000 /mnt/sdcard/Download/${name}_1.mp4; screenrecord --size 1598x898 --bit-rate 2000000 /mnt/sdcard/Download/${name}_2.mp4; screenrecord --size 1598x898 --bit-rate 2000000 /mnt/sdcard/Download/${name}_3.mp4"
 		PID=$!
     sleep 3
 		adb shell ls /mnt/sdcard/Download/*.mp4 | tr '\r' ' ' | xargs -n1 adb pull
@@ -20,6 +20,7 @@ function start() {
 
 function stop() {
     echo "Stop video recording"
+    # kill $(ps -ef | grep [f]ffmpeg | awk '{print $2}')
     kill $(ps -ef | grep screenrecord | awk '{print $2}')
     kill $PID
 }
