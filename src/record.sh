@@ -9,10 +9,12 @@ function start() {
     # ffmpeg -video_size 1598x898 -framerate 15 -f x11grab -i $DISPLAY ${VIDEO_PATH}/${PR}/${BUILD}/${name} -y
     # adb shell screenrecord --size 1598x898 --bit-rate 3000000 --time-limit 180 --bugreport /mnt/sdcard/Download/${name}
     adb shell "screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_1.mp4; screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_2.mp4; screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_3.mp4"
+		# Download the videos
+		adb shell ls /mnt/sdcard/Download/*.mp4 | tr '\r' ' ' | xargs -n1 adb pull
     ffmpeg -f concat -safe 0 -i <(for f in ./*.mp4; do echo "file '$PWD/$f'"; done) -c copy ${name}.mp4
-		adb pull /mnt/sdcard/Download/${name}
-    mv ${name} ${VIDEO_PATH}/${PR}/${BUILD}/
-		adb shell rm /mnt/sdcard/Download/${name}
+    mv ${name}.mp4 ${VIDEO_PATH}/${PR}/${BUILD}/
+    rm ./*.mp4
+		adb shell rm /mnt/sdcard/Download/*.mp4
 }
 
 function stop() {
