@@ -196,13 +196,7 @@ COPY src /root/src
 COPY supervisord.conf /root/
 RUN chmod -R +x /root/src && chmod +x /root/supervisord.conf
 
-#HEALTHCHECK --interval=2s --timeout=40s --retries=1 \
-#    CMD timeout 40 adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
-
-HEALTHCHECK --interval=5s \
-        --timeout=10s \
-        --start-period=20s \
-        --retries=20 \
-        CMD adb shell getprop dev.bootcomplete | grep "1"
+HEALTHCHECK --interval=2s --timeout=40s --retries=1 \
+    CMD timeout 40 adb wait-for-device shell 'while [[ -z $(getprop dev.bootcomplete) ]]; do sleep 1; done'
 
 CMD /usr/bin/supervisord --configuration supervisord.conf
