@@ -65,7 +65,7 @@ services:
       # - ../src/utils.sh:/root/src/utils.sh
       # - ../src/app.py:/root/src/app.py
       # - ../devices:/root/devices
-      # - ../src/record.sh:/root/src/record.sh
+      - ../src/record.sh:/root/src/record.sh
       # - ../src/google_play_services.apk:/root/src/google_play_services.apk
       # - ../src/google_play_store.apk:/root/src/google_play_store.apk
       # - ../src/google_chrome.apk:/root/src/google_chrome.apk

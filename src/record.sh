@@ -7,7 +7,7 @@ function start() {
     mkdir -p ${VIDEO_PATH}/${PR}/${BUILD}
     echo "Start video recording"
     # ffmpeg -video_size 1598x898 -framerate 15 -f x11grab -i $DISPLAY ${VIDEO_PATH}/${PR}/${BUILD}/${name} -y
-    adb shell screenrecord --size 1598x898 --bit-rate 3000000 --time-limit 500 --bugreport /mnt/sdcard/Download/${name}
+    adb shell screenrecord --size 1598x898 --bit-rate 3000000 --time-limit 180 --bugreport /mnt/sdcard/Download/${name}
 
 		# Download the video
 		adb pull /mnt/sdcard/Download/${name}
