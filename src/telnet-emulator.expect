@@ -1,0 +1,36 @@
+#!/usr/bin/expect
+# It works by opening a telnet session and authenticates, before issuing the command.
+
+# Usage: `expect -f telnet-emulator.exp5554`
+
+# Since SDK Tools 25.1.6, the Android emulator has required authentication
+# before any commands can be run on it. This breaks commands such as
+# `adb emu kill`.
+#
+# References:
+# - https://developer.android.com/studio/run/emulator-commandline.html#console-session
+# - https://code.google.com/p/android/issues/detail?id=21021#
+#
+##############################################################
+
+set timeout 10
+
+# Parse params.
+# Port is optional, and defaults to 5554
+proc parseArgv {{port "5554"}} {
+    variable ::PORT $port
+}
+parseArgv {*}$argv
+
+# Read auth token from file
+set TOKEN [read [open "$::env(HOME)/.emulator_console_auth_token" r]]
+
+send_user "telnet emulator on port $PORT with auth token $TOKEN\n"
+
+# Start telnet session, and issue the commands.
+spawn telnet localhost $PORT
+expect "OK"
+send "auth $TOKEN\r"
+expect "OK"
+send "geo fix 51.4 35.7 5\r"
+expect "OK"
