@@ -154,7 +154,8 @@ def appium_run(avd_name: str):
         except ValueError as v_err:
             logger.error(v_err)
     title = 'Appium Server'
-    subprocess.check_call('xterm -T "{title}" -n "{title}" -e \"{cmd}\"'.format(title=title, cmd=cmd), shell=True)
+    # subprocess.check_call('xterm -T "{title}" -n "{title}" -e \"{cmd}\"'.format(title=title, cmd=cmd), shell=True)
+    subprocess.check_call(cmd, shell=False)
 
 
 def create_node_config(avd_name: str, browser_name: str, appium_host: str, appium_port: int, selenium_host: str,
