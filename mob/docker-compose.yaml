@@ -83,5 +83,6 @@ services:
       - SE_OPTS=-browserTimeout 100 -timeout 100
       - QEMU_AUDIO_DRV=none
       - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -qemu -m 2048M -cpu host
+      # - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -no-skin -no-window -qemu -m 2048M -cpu host
     labels:
       - "autoheal=true"
