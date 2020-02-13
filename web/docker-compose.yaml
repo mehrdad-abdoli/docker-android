@@ -46,6 +46,7 @@ services:
     environment:
       - HOST_UID
       - HOST_GID
+      - ZALENIUM_EXTRA_JVM_PARAMS="-Dwebdriver.http.factory=apache"
       # - ZALENIUM_SELENIUM_CONTAINER_CPU_LIMIT=100000000
       # - ZALENIUM_SELENIUM_CONTAINER_MEMORY_LIMIT=1073741824
       #- PULL_SELENIUM_IMAGE=true
