@@ -52,7 +52,7 @@ services:
     privileged: true
     devices:
       - /dev/kvm:/dev/kvm
-    scale: 1
+    scale: 20
     depends_on:
       - selenium_app_hub
     ports:
