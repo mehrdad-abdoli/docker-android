@@ -9,7 +9,8 @@ function start() {
     # ffmpeg -video_size 1598x898 -framerate 15 -f x11grab -i $DISPLAY ${VIDEO_PATH}/${PR}/${BUILD}/${name} -y
     # adb shell screenrecord --size 1598x898 --bit-rate 3000000 --time-limit 180 --bugreport /mnt/sdcard/Download/${name}
     adb shell "screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_1.mp4; screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_2.mp4; screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_3.mp4"
-		# Download the videos
+		PID=$!
+    sleep 3
 		adb shell ls /mnt/sdcard/Download/*.mp4 | tr '\r' ' ' | xargs -n1 adb pull
     ffmpeg -f concat -safe 0 -i <(for f in ./*.mp4; do echo "file '$PWD/$f'"; done) -c copy ${name}.mp4
     mv ${name}.mp4 ${VIDEO_PATH}/${PR}/${BUILD}/
@@ -19,7 +20,8 @@ function start() {
 
 function stop() {
     echo "Stop video recording"
-    kill $(ps -ef | grep [f]fmpeg | awk '{print $2}')
+    kill $(ps -ef | grep screenrecord | awk '{print $2}')
+    kill $PID
 }
 
 function auto_record() {
@@ -53,5 +55,4 @@ function auto_record() {
 
     echo "Auto recording is disabled!"
 }
-
 $@
