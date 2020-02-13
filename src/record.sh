@@ -3,12 +3,14 @@
 function start() {
     PR="$(curl -s localhost:4723/wd/hub/sessions | jq -r '.value[0].capabilities.PR')"
     BUILD="$(curl -s localhost:4723/wd/hub/sessions | jq -r '.value[0].capabilities.build')"
-    name="$(curl -s localhost:4723/wd/hub/sessions | jq -r '.value[0].capabilities.name').mp4"
+    name="$(curl -s localhost:4723/wd/hub/sessions | jq -r '.value[0].capabilities.name')"
     mkdir -p ${VIDEO_PATH}/${PR}/${BUILD}
     echo "Start video recording"
     # ffmpeg -video_size 1598x898 -framerate 15 -f x11grab -i $DISPLAY ${VIDEO_PATH}/${PR}/${BUILD}/${name} -y
-    adb shell screenrecord --size 1598x898 --bit-rate 3000000 --time-limit 180 --bugreport /mnt/sdcard/Download/${name}
-
+    # adb shell screenrecord --size 1598x898 --bit-rate 3000000 --time-limit 180 --bugreport /mnt/sdcard/Download/${name}
+    adb shell "screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_1.mp4; screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_2.mp4; screenrecord --size 1598x898 --bit-rate 3000000 /mnt/sdcard/Download/${name}_3.mp4"
+    ffmpeg -f concat -safe 0 -i <(for f in ./*.mp4; do echo "file '$PWD/$f'"; done) -c copy ${name}.mp4
+    rm ${name}_*.mp4
 		# Download the video
 		adb pull /mnt/sdcard/Download/${name}
 
