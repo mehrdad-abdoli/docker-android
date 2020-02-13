@@ -13,7 +13,8 @@ version: '2.2'
 services:
   #--------------#
   zalenium:
-    image: "dosel/zalenium:3.14.0g"
+    # image: "dosel/zalenium:3.14.0g"
+    image: "dosel/zalenium:3.141.59y"
     container_name: zalenium
     hostname: zalenium
     tty: true
