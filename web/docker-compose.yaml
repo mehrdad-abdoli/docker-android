@@ -20,7 +20,7 @@ services:
     tty: true
     privileged: true
     volumes:
-      - /home/qa/web/videos/web:/home/seluser/videos
+      - /home/qa/web/videos/Web:/home/seluser/videos
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     ports:
