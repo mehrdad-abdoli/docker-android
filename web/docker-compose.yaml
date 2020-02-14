@@ -55,4 +55,4 @@ services:
       # - TIME_TO_WAIT_TO_START=120000
       # - NEW_SESSION_WAIT_TIMEOUT=600000
       # - WAIT_FOR_AVAILABLE_NODES=true
-      #- zalenium_no_proxy=172.16/12, 10.0.0.0/8, *.local, 192.168/16, localhost, 127.0.0.1
+      - zalenium_no_proxy=172.16/12, 10.0.0.0/8, *.local, 169.254/16, 192.168/16, 192.168.99.*, localhost, 127.0.0.1
