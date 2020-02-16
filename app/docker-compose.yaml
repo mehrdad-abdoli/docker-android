@@ -57,8 +57,8 @@ services:
     scale: 20
     depends_on:
       - selenium_app_hub
-    ports:
-      - 6080
+    # ports:
+    #   - 6080
     # cpus: "1"
     # mem_limit: "4096m"
     volumes:
