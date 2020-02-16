@@ -36,6 +36,8 @@ services:
       interval: 15s
       timeout: 30s
       retries: 5
+    volumes:
+      - /dev/shm:/dev/shm
     environment:
       - GRID_MAX_SESSION=20
       - TZ=Asia/Tehran
@@ -60,12 +62,13 @@ services:
     # cpus: "1"
     # mem_limit: "4096m"
     volumes:
+      - /dev/shm:/dev/shm
       - /var/lib/docker/qa/vids/AndroidApp:/tmp/video
       # - ../media:/media
       # - ../src/utils.sh:/root/src/utils.sh
       # - ../src/app.py:/root/src/app.py
       # - ../devices:/root/devices
-      - ../src/record.sh:/root/src/record.sh
+      # - ../src/record.sh:/root/src/record.sh
       # - ../src/google_play_services.apk:/root/src/google_play_services.apk
       # - ../src/google_play_store.apk:/root/src/google_play_store.apk
       # - ../src/google_chrome.apk:/root/src/google_chrome.apk
@@ -82,11 +85,11 @@ services:
       - QEMU_AUDIO_DRV=none
       - MOBILE_WEB_TEST=true
       - SE_OPTS=-browserTimeout 100 -timeout 100
-      - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -no-skin -no-window -qemu -m 2048M -cpu host
       # In seconds, maps to "timeout"
       - GRID_TIMEOUT=60
       # In seconds, maps to "browserTimeout"
       - GRID_BROWSER_TIMEOUT=30
+      - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -no-skin -no-window -qemu -m 2048M -cpu host
       # - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -qemu -m 2048M -cpu host
       # -device virtio-vga,virgl=on
     labels:
