@@ -83,6 +83,10 @@ services:
       - MOBILE_WEB_TEST=true
       - SE_OPTS=-browserTimeout 100 -timeout 100
       - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -no-skin -no-window -qemu -m 2048M -cpu host
+      # In seconds, maps to "timeout"
+      - GRID_TIMEOUT=60
+      # In seconds, maps to "browserTimeout"
+      - GRID_BROWSER_TIMEOUT=30
       # - EMULATOR_ARGS=-no-snapshot-save -memory 2048 -no-boot-anim -qemu -m 2048M -cpu host
       # -device virtio-vga,virgl=on
     labels:
